@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<h3>Завдання 9</h3>
+	<p>Скласти програму для розв’язування задачі: йде N-а секунда доби, визначити скільки повних годин і повних
+		хвилин пройшло до цього моменту.</p>
+
+	<script>
+		let userSeconds = parseInt(prompt('Введіть кількість секунд:'))
+
+		const hour = userSeconds / 3600
+		const minute = userSeconds % 3600 / 60
+
+		document.write(`Час, який пройшов від початку доби: ${Math.floor(hour)} год ${Math.floor(minute)} хв`)
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<h3>Завдання 1</h3>
+	<p>Дано ширину екрана та кількість елементів, які повинні бути відображені у рядку. Визначити ширину елементів, які
+		повинні бути відображені у цьому рядку. </p>
+
+	<script>
+		let widthScreen = parseInt(prompt('Ширина екрана:'))
+		let numberElements = parseInt(prompt('Кількість елементів:'))
+		let widthElement = widthScreen / numberElements
+
+		document.write(`
+			Ширина екрана - ${widthScreen} px <br>
+			Кількість елементів - ${numberElements} <br>
+			Ширина елемента - ${widthElement} px 
+		`)
+	</script>
+</body>
+
+</html>

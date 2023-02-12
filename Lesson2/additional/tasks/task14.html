@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<h3>Завдання 14</h3>
+	<p>З клавіатури вводиться номер дня тижня (від 1 до 7). Визначити який буде день тижня через N днів.</p>
+
+	<script>
+		let dayOfWeek = parseInt(prompt('Номер дня тижня:'))
+		let addNumberDays = parseInt(prompt('Додати кількість днів:'))
+
+		let nextNumberDay = (dayOfWeek + addNumberDays) % 7
+
+		document.write(`
+			Номер дня тижня - ${dayOfWeek} <br>
+			Через ${addNumberDays} днів буде ${nextNumberDay} день тижня
+		`)
+	</script>
+</body>
+
+</html>

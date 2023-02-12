@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<h3>Завдання 11</h3>
+	<p>Дано поточну кількість годиy, хвилин, секунд (як на годиннику). Визначити 1) яка кількість секунд буде на
+		годиннику через N секунд.
+		2) яка кількість хвилин буде на годиннику через N секунд, X хвилин.
+	</p>
+
+	<script>
+		let currentHour = parseInt(prompt('Година:'))
+		let currentMinute = parseInt(prompt('Хвилина:'))
+		let currentSecond = parseInt(prompt('Секунда:'))
+
+		// let addMinutes = parseInt(prompt('Додати хвилини:'))
+		let addSeconds = parseInt(prompt('Додати секунди:'))
+
+		let totalSeconds = currentHour * 3600 + currentMinute * 60 + currentSecond + addSeconds
+
+		let nextHour = Math.floor(totalSeconds / 3600)
+		let nextMinute = Math.floor(totalSeconds % 3600 / 60)
+		let nextSecond = totalSeconds % 3600 % 60
+
+		document.write(`
+			Дано: ${currentHour} год ${currentMinute} хв ${currentSecond} сек <br>
+			Через ${addSeconds} сек буде ${nextHour} год ${nextMinute} хв ${nextSecond} сек
+		`)
+	</script>
+</body>
+
+</html>

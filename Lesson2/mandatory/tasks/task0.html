@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<h3>Завдання 0</h3>
+	<p>Обчислити значення виразів:</p>
+	<ol>
+		<li>S1 = a+12+b</li>
+		<li>S2 = &#8730(a+b) / (2*a)</li>
+		<li>S3 = &#8731(a+b)c</li>
+		<li>S4 = sin(a / -b) </li>
+	</ol>
+
+	<script>
+
+		let a = parseInt(prompt('a =', 'введіть число'))
+		let b = parseInt(prompt('b =', 'введіть число'))
+		let c = parseInt(prompt('c =', 'введіть число'))
+
+		document.write(`a = ${a}, b = ${b}, c = ${c} <br>`)
+
+		let S1 = a + 12 + b
+		let S2 = Math.sqrt((a + b) / (2 * a))
+		let S3 = Math.cbrt((a + b) * c)
+		let S4 = Math.sin(a / -b)
+
+		document.write(`S1 = ${S1} <br>
+							S2 = ${S2} <br>
+							S3 = ${S3} <br>
+							S4 = ${S4} <br>`)
+	</script>
+</body>
+
+</html>

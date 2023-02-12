@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		td {
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<h3>Завдання 3</h3>
+	<p>З клавіатури вводяться вартість одиниці та кількість одиниць двох товарів. Вивести на екран вартість кожного з
+		видів товарів окремо і загальну вартість.</p>
+
+	<script>
+		let productPrice_1 = parseFloat(prompt('Ціна товару:'))
+		let numberOfProducts_1 = parseFloat(prompt('Кількість товару:'))
+		let totalPrice_1 = productPrice_1 * numberOfProducts_1
+
+		let productPrice_2 = parseFloat(prompt('Ціна товару:'))
+		let numberOfProducts_2 = parseFloat(prompt('Кількість товару:'))
+		let totalPrice_2 = productPrice_2 * numberOfProducts_2
+
+		let totalPrice = totalPrice_1 + totalPrice_2
+
+		document.write(`
+						<table border="1" width="300">
+							<tr>
+								<td>Назва</td>
+								<td>Ціна, грн</td>
+								<td>Кількість, шт</td>
+								<td>Всього, грн</td>								
+							</tr>	
+							<tr>
+								<td>Перший товар</td>
+								<td>${productPrice_1}</td>
+								<td>${numberOfProducts_1}</td>
+								<td>${totalPrice_1}</td>
+							</tr>	
+							<tr>
+								<td>Другий товар</td>
+								<td>${productPrice_2}</td>
+								<td>${numberOfProducts_2}</td>
+								<td>${totalPrice_2}</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td>Всього:</td>
+								<td>${totalPrice} грн</td>
+							</tr>	
+						</table>`)
+	</script>
+</body>
+
+</html>

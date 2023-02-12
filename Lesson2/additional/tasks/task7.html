@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<h3>Завдання 7</h3>
+	<p>Скласти алгоритм, який обчислює цілу і дробову частину даного числа х. Наприклад: число 23,56 => ціла: 23,
+		дробова: 0,56.</p>
+
+	<script>
+		let userNumber = parseFloat(prompt('Ввести десятковий дріб:'))
+		let wholePart = Math.floor(userNumber)
+		let fractionalPart = userNumber - wholePart
+		console.log(wholePart);
+
+		document.write(`
+			Десятковий дріб - ${userNumber} <br>
+			Ціла частина - ${wholePart} <br>
+			Дробова частина - ${Math.round(fractionalPart * 100) / 100}
+		`)
+	</script>
+</body>
+
+</html>

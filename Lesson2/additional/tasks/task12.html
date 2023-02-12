@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<h3>Завдання 12</h3>
+	<p>З клавіатури вводиться кількість монет номіналом 2 копійки (5коп, 25коп, 50 коп). Визначити скільки гривень
+		і копійок є у даній сумі.
+	</p>
+
+	<script>
+		let numberOfCoins = parseInt(prompt('Кількість монет:'))
+		let denominationOfCoins = parseInt(prompt('Номінал монет, коп:'))
+		let amountOfMoney = numberOfCoins * denominationOfCoins
+		let amountHryvnias = Math.floor(amountOfMoney / 100)
+		let amountOfPennies = amountOfMoney % 100
+
+		document.write(`
+			Сума монет ${amountOfMoney} коп = ${amountHryvnias} грн ${amountOfPennies} коп
+		`)
+	</script>
+</body>
+
+</html>

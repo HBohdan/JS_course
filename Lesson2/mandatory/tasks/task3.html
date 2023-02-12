@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<h3>Завдання 3</h3>
+	<p>Дано вартість одиниці товару і кількість. Знайти загальну вартість та ПДВ (5% від загальної вартості).</p>
+
+	<script>
+		let cost = parseFloat(prompt('Вартість товару:'))
+		let quantity = parseFloat(prompt('Кількість товару:'))
+		const VAT = 0.05
+
+		let totalCost = cost * quantity
+		let vatOfTotalCost = totalCost * VAT
+
+		document.write(`
+			Загальна вартість - ${totalCost} <br>
+			ПДВ - ${vatOfTotalCost}`)
+
+	</script>
+</body>
+
+</html>
