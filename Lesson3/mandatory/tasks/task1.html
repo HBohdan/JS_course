@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<h3>Завдання 1</h3>
+	<p>З клавіатури вводяться імена двох дітей та кількість у них цукерок. Вивести не екран ім’я тієї дитини, у
+		якої кількість цукерок є більшою, або вивести, що кількість однакова.</p>
+
+
+	<script>
+
+		const firstChildName = prompt('Введіть ім\'я першої дитини:')
+		const firstChildCandies = parseFloat(prompt('Введіть кількість цукерок:'))
+		const secondChildName = prompt('Введіть ім\'я другої дитини:')
+		const secondChildCandies = parseFloat(prompt('Введіть кількість цукерок:'))
+
+		let moreCandiesName = (firstChildCandies > secondChildCandies) ? firstChildName : secondChildName
+
+		document.write(`
+			${firstChildName}, кількість цукерків - ${firstChildCandies}<br>
+			${secondChildName}, кількість цукерків - ${secondChildCandies}<br>
+			<br>
+		`)
+
+		if (firstChildCandies == secondChildCandies)
+			document.write(`Кількість однакова.`)
+		else
+			document.write(` ${moreCandiesName} `)
+
+	</script>
+</body>
+
+</html>

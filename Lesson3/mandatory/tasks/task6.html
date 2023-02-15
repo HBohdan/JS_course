@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		td {
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<h3>Завдання 6</h3>
+	<p>З клавіатури вводиться номер дня тижня. Вивести на екран назву дня.</p>
+
+	<script>
+		const numberDayOfWeek = parseInt(prompt('Номер дня тижня:', 1))
+		let dayOfWeek
+
+		switch (numberDayOfWeek) {
+			case 1: dayOfWeek = 'Понеділок'
+				break;
+			case 2: dayOfWeek = 'Вівторок'
+				break;
+			case 3: dayOfWeek = 'Середа'
+				break;
+			case 4: dayOfWeek = 'Четвер'
+				break;
+			case 5: dayOfWeek = 'П\'ятниця'
+				break;
+			case 6: dayOfWeek = 'Субота'
+				break;
+			case 7: dayOfWeek = 'Неділя'
+				break;
+			default: dayOfWeek = 'Введіть номер дня від 1 до 7!!!'
+				break;
+		}
+
+		document.write(`Номер дня тижня ${numberDayOfWeek} - ${dayOfWeek}`)
+	</script>
+</body>
+
+</html>

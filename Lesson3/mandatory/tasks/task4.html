@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<h3>Завдання 4</h3>
+	<p>З клавіатури вводиться вік людини. Вивести на екран ким він є (дитиною у садочку, школярем, студентом,
+		працівником, пенсіонером).</p>
+
+	<script>
+		const userAge = parseInt(prompt('Вік людини:'))
+		// let userPlace
+		document.write(`Вік людини - ${userAge} р. `)
+
+		if (userAge < 6)
+			document.write(`Дитина у садочку.`)
+		else if (userAge >= 6 && userAge < 18)
+			document.write(`Школяр.`)
+		else if (userAge >= 18 && userAge < 23)
+			document.write(`Студент.`)
+		else if (userAge >= 23 && userAge < 65)
+			document.write(`Працівник.`)
+		else
+			document.write(`Пенсіонер. Дзен)`)
+	</script>
+</body>
+
+</html>
