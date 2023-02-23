@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 1</h3>
+    <p>
+      Вивести з використанням циклів маркований список з випадковими числами
+      (1-100). Кількість випадкових чисел вводиться користувачем. Приклад:
+    </p>
+
+    <script>
+      const numberOfNumbers = parseInt(prompt("Кількість випадкових чисел:"))
+
+      const MIN_NUMBER = 1
+      const MAX_NUMBER = 100
+
+      let tempListNumber = ""
+      for (let i = 0; i < numberOfNumbers; i++) {
+        let randomNum =
+          Math.floor(Math.random() * (MAX_NUMBER - MIN_NUMBER + 1)) + MIN_NUMBER
+
+        tempListNumber += `<li>${randomNum}</li>`
+      }
+
+      document.write(`
+			Кількість випадкових чисел: ${numberOfNumbers}
+			<ul>
+				${tempListNumber}
+			</ul>
+		`)
+    </script>
+  </body>
+</html>

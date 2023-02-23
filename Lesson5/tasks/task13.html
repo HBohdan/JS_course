@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 13</h3>
+    <p>
+      Морський бій. Комп’ютер випадково розташовує одиночний корабель на полі
+      розміром N*M. Маючи К снарядів користувач намагається потопити корабель.
+    </p>
+
+    <script>
+      const userSize = parseInt(prompt("Розмір поля, N*M:"))
+      let numberShells = parseInt(prompt("Кількість снарядів, K:"))
+
+      shipX = Math.floor(Math.random() * userSize) + 1
+      shipY = Math.floor(Math.random() * userSize) + 1
+
+      const shipPlace = String(shipX) + String(shipY)
+      console.log(shipPlace)
+
+      for (let i = 1; i <= numberShells; i++) {
+        const user_X = prompt("Координата по Х:")
+        const user_Y = prompt("Координата по Y:")
+
+        let userPlace = user_X + user_Y
+        console.log(userPlace)
+
+        if (shipPlace === userPlace) {
+          document.write(`Рузький корабль пішов по адресу))`)
+          break
+        }
+        if (i === numberShells)
+          document.write(`Вам не вдалося потопити рузький корабль((`)
+      }
+    </script>
+  </body>
+</html>

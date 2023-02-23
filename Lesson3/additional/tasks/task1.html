@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 1</h3>
+    <p>На екран виводиться меню:</p>
+
+    <ol>
+      <li>Веселий</li>
+      <li>Сумний</li>
+      <li>Обурений</li>
+    </ol>
+    <p>
+      Користувач вводить номер пункту меню і на екрані з’являється відповідне
+      зображення смайла.
+    </p>
+
+    <script>
+      const numberItem = parseInt(prompt("Номер пункту меню:", 1));
+
+      let cheerful = '<img src="./img/cheerful.png">';
+      let sad = '<img src="./img/sad.png">';
+      let indignant = '<img src="./img/indignant.png">';
+
+      let image;
+      switch (numberItem) {
+        case 1:
+          image = cheerful;
+          break;
+        case 2:
+          image = sad;
+          break;
+        case 3:
+          image = indignant;
+          break;
+        default:
+          image = "Номер пункту меню від 1 до 3!!!";
+          break;
+      }
+
+      document.write(`${image}`);
+    </script>
+  </body>
+</html>
