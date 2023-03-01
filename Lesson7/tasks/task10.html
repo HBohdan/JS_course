@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 10</h3>
+    <p>
+      Дано покази температур (довільна кількість). Розробити функцію, яка
+      дозволить знайти середнє значення для додатних показів температури.
+    </p>
+
+    <script>
+      document.write(
+        `Середнє значення для додатних показів температури = ${averagePositiveTemperature()}`
+      )
+
+      function averagePositiveTemperature() {
+        let countPositivTemp = 0
+        let sumTemperature = 0
+        let temp
+
+        do {
+          temp = parseInt(
+            prompt(
+              "Введіть показник температури: (для виходу натисніть 'Cancel')",
+              15
+            )
+          )
+
+          if (temp > 0) {
+            sumTemperature += temp
+            countPositivTemp++
+          }
+        } while (isFinite(temp))
+
+        return sumTemperature / countPositivTemp
+      }
+    </script>
+  </body>
+</html>

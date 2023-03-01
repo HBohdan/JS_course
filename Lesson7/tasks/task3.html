@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 3</h3>
+    <p>
+      Створити окремі функції, які для 4 чисел знаходять суму, добуток, середнє
+      арифметичне, мінімальне значення.
+    </p>
+
+    <script>
+      const num_1 = parseInt(prompt("Введіть ціле число:"))
+      const num_2 = parseInt(prompt("Введіть ціле число:"))
+      const num_3 = parseInt(prompt("Введіть ціле число:"))
+      const num_4 = parseInt(prompt("Введіть ціле число:"))
+
+      function getSum(a, b, c, d) {
+        return a + b + c + d
+      }
+
+      function getProduct(a, b, c, d) {
+        return a * b * c * d
+      }
+
+      function getAverage(a, b, c, d) {
+        return (a + b + c + d) / 4
+      }
+
+      function getMinNumber() {
+        let minNumber = Infinity
+        for (let i = 0; i < 4; i++) {
+          minNumber = arguments[i] < minNumber ? arguments[i] : minNumber
+          console.log(arguments[i])
+        }
+
+        return minNumber
+      }
+
+      document.write(`Сума чисел = ${getSum(num_1, num_2, num_3, num_4)}<br>`)
+      document.write(
+        `Добуток чисел = ${getProduct(num_1, num_2, num_3, num_4)}<br>`
+      )
+      document.write(
+        `Середнє арифметичне чисел = ${getAverage(
+          num_1,
+          num_2,
+          num_3,
+          num_4
+        )}<br>`
+      )
+      document.write(
+        `Мінімальне з чисел = ${getMinNumber(num_1, num_2, num_3, num_4)}<br>`
+      )
+    </script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 4</h3>
+    <p>
+      Створити функцію, яка для 3 заданих чисел знаходить одночасно декілька
+      результатів: кількість парних, кількість додатних, кількість більших за
+      100.
+    </p>
+
+    <script>
+      const num_1 = parseInt(prompt("Введіть перше ціле число:"))
+      const num_2 = parseInt(prompt("Введіть друге ціле число:"))
+      const num_3 = parseInt(prompt("Введіть третє ціле число:"))
+
+      function getResults() {
+        let countEvenNumb = 0
+        let countPositiveNumb = 0
+        let countMore100 = 0
+
+        for (let i = 0; i < 3; i++) {
+          if (arguments[i] % 2 === 0) countEvenNumb++
+          if (arguments[i] > 0) countPositiveNumb++
+          if (arguments[i] > 100) countMore100++
+
+          console.log(arguments[i])
+        }
+
+        return document.write(`
+		  	Кількість парних = ${countEvenNumb}<br>
+		  	Кількість додатних = ${countPositiveNumb}<br>
+		  	Кількість більших за 100 = ${countMore100}
+		  `)
+      }
+
+      getResults(num_1, num_2, num_3)
+    </script>
+  </body>
+</html>

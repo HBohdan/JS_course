@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 5</h3>
+    <p>
+      Створити окремі функції, які переводять сантиметри у дюйми, кілограми у
+      фунти, кілометри у милі.
+    </p>
+
+    <script>
+      const userNumber = parseInt(prompt("Введіть ціле число:"))
+
+      function convertingCentimetersToInches(param) {
+        return param * 0.3937
+      }
+
+      function convertingKilogramsToPounds(param) {
+        return param * 2.2046
+      }
+
+      function convertingKilometersToMiles(param) {
+        return param * 0.621
+      }
+
+      document.write(
+        `${userNumber} см = ${convertingCentimetersToInches(userNumber).toFixed(
+          2
+        )} inch <br>`
+      )
+      document.write(
+        `${userNumber} кг = ${convertingKilogramsToPounds(userNumber).toFixed(
+          2
+        )} lb <br>`
+      )
+      document.write(
+        `${userNumber} км = ${convertingKilometersToMiles(userNumber).toFixed(
+          2
+        )} mi`
+      )
+    </script>
+  </body>
+</html>
