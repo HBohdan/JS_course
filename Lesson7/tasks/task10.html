@@ -16,27 +16,25 @@
 
     <script>
       document.write(
-        `Середнє значення для додатних показів температури = ${averagePositiveTemperature()}`
+        `Середнє значення для додатних показів температури = ${averagePositiveTemperature(
+          12,
+          -3,
+          8,
+          20,
+          20
+        )}`
       )
 
       function averagePositiveTemperature() {
-        let countPositivTemp = 0
         let sumTemperature = 0
-        let temp
+        let countPositivTemp = 0
 
-        do {
-          temp = parseInt(
-            prompt(
-              "Введіть показник температури: (для виходу натисніть 'Cancel')",
-              15
-            )
-          )
-
-          if (temp > 0) {
-            sumTemperature += temp
+        for (let i = 0; i < arguments.length; i++) {
+          if (arguments[i] > 0) {
+            sumTemperature += arguments[i]
             countPositivTemp++
           }
-        } while (isFinite(temp))
+        }
 
         return sumTemperature / countPositivTemp
       }
