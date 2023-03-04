@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 5</h3>
+    <p>Дано послідовність оцінок учня. Підрахувати кількість:</p>
+    <ol>
+      <li>- двійок;</li>
+      <li>- кількість хороших оцінок (добре, відмінно);</li>
+      <li>- кількість оцінок, які нижче середнього.</li>
+    </ol>
+
+    <script>
+      const ratings = [10, 11, 11, 7, 2, 3, 9, 2, 10, 12]
+
+      document.write(countRatings(ratings))
+
+      function countRatings(arr) {
+        let countRatingTwo = 0
+        let countRatingGood = 0
+        let countRatingИelowФverage = 0
+
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i] === 2) {
+            countRatingTwo++
+            countRatingИelowФverage++
+          } else if (arr[i] > 6) countRatingGood++
+          else countRatingИelowФverage++
+        }
+
+        return `
+				Кількість оцінок:<br>
+					- двійок - ${countRatingTwo}<br>
+					- хороших оцінок (добре, відмінно) - ${countRatingGood}<br>
+					- оцінок, які нижче середнього - ${countRatingИelowФverage}.
+			`
+      }
+    </script>
+  </body>
+</html>

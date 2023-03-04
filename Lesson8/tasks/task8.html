@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 8</h3>
+    <p>
+      Дано одновимірний масив, у якому зберігається певна виграшна сума
+      (елементи заповнюються випадковим чином значеннями від -500 до 500).
+      Надаючи користувачу можливість вибирати номери елементів (поки він не
+      відмовиться). Знаходити сумарний виграш.
+    </p>
+
+    <script>
+      const winningAmount = new Array(10)
+
+      getArray(winningAmount, -500, 500)
+      console.log(winningAmount)
+
+      // Цікава гра получилася))
+      document.write(getFinalAmount(winningAmount))
+
+      function getRandomNumb(minV, maxV) {
+        return minV + Math.floor(Math.random() * (maxV - minV + 1))
+      }
+
+      function getArray(arr, minV, maxV) {
+        for (let i = 0; i < arr.length; i++) {
+          arr[i] = getRandomNumb(minV, maxV)
+        }
+      }
+
+      function getFinalAmount(arr) {
+        let countSum = 0
+
+        let userElement
+        do {
+          userElement = parseInt(prompt("Введіть номер елемента, (1 - 10):"))
+
+          if (isFinite(userElement)) {
+            countSum += arr[userElement - 1]
+          }
+        } while (isFinite(userElement))
+
+        let printWin = `Ви виграли ${countSum} у.о.)`
+        let printLoos = `Ви програли ${Math.abs(countSum)} у.о.`
+
+        return countSum >= 0 ? printWin : printLoos
+      }
+    </script>
+  </body>
+</html>

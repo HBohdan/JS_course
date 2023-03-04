@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 9</h3>
+    <p>
+      Морський бій. Користувач вводить кількість клітинок одновимірного масиву
+      та кількість одиночних кораблів. Комп’ютер довільно розміщує ці одиночні
+      кораблі у масиві по один у клітинці (якщо у клітинці 0, то клітинка пуста,
+      якщо 1 – то це означає, що там є корабель. Користувач вводить номер
+      клітинки, куди стріляє. Гра продовжується до тих пір, поки не будуть
+      потоплені усі кораблі.
+    </p>
+
+    <script>
+      const userNumberCells = parseInt(prompt("Кількість клітинок:"))
+      const userNumberShips = parseInt(prompt("Кількість кораблів:"))
+
+      const playingField = new Array(userNumberCells)
+      for (let i = 0; i < playingField.length; i++) {
+        playingField[i] = 0
+      }
+
+      let countShips = 0
+      do {
+        let randomIndex = Math.floor(Math.random() * userNumberCells)
+        if (playingField[randomIndex] === 0) {
+          playingField[randomIndex] = 1
+          countShips++
+        }
+      } while (countShips !== userNumberShips)
+      console.log(playingField)
+
+      let destroyedShips = 0
+      let shot = 1
+      do {
+        let userShot = parseInt(
+          prompt(
+            `Знищено кораблів - ${destroyedShips}. Постріл - ${shot}<br>
+			 Введіть номер клітинки для пострілу від 1 до ${userNumberCells}:
+			 `
+          )
+        )
+
+        if (playingField[userShot - 1] === 1) {
+          destroyedShips++
+          countShips--
+        }
+
+        shot++
+      } while (countShips !== 0)
+
+      document.write(`
+			Ви знищили всі кораблі - ${userNumberShips} шт.<br> 
+			Кількість пострілів - ${shot}.
+		`)
+    </script>
+  </body>
+</html>

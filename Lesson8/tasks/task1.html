@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 1</h3>
+    <p>
+      Дано масив, який містить оцінки з К предметів. Знайти середній бал і
+      з’ясувати до якої категорії він відноситься (відмінник, двійочник (має
+      хоча би одну двійку), хорошист (оцінки добре і відмінно), трійочник(є хоча
+      би одна трійка)).
+    </p>
+
+    <script>
+      const ratings = [10, 11, 11, 10, 12]
+      const ratings1 = [10, 11, 9, 10, 12]
+      const ratings2 = [10, 11, 9, 10, 5]
+      const ratings3 = [10, 2, 9, 10, 5]
+
+      const studentSuccess = getStudentSuccess(ratings2)
+
+      document.write(studentSuccess)
+
+      function getStudentSuccess(ratings) {
+        let sumRating = 0
+        let minRating = Infinity
+        let studentCategory = ""
+
+        for (let i = 0; i < ratings.length; i++) {
+          sumRating += ratings[i]
+          if (ratings[i] < minRating) minRating = ratings[i]
+        }
+
+        switch (minRating) {
+          case 1:
+          case 2:
+          case 3:
+            studentCategory = "двійочник"
+            break
+          case 4:
+          case 5:
+          case 6:
+            studentCategory = "трійочник"
+            break
+          case 7:
+          case 8:
+          case 9:
+            studentCategory = "хорошист"
+            break
+          default:
+            studentCategory = "відмінник"
+            break
+        }
+
+        let averageRating = sumRating / ratings.length
+
+        return `Середній бал = ${averageRating.toFixed(2)}, ${studentCategory}.`
+      }
+    </script>
+  </body>
+</html>

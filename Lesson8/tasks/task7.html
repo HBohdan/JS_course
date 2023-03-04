@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 7</h3>
+    <p>
+      Дано послідовність платіжок протягом року. Знайти сумарну кількість грошей
+      за:
+    </p>
+    <ol>
+      <li>за весь рік;</li>
+      <li>у першій половині року;</li>
+      <li>у другій половині року;</li>
+      <li>за літо;</li>
+      <li>за ІІ квартал;</li>
+      <li>за парні місяці (з парними номерами);</li>
+      <li>за місяці, які є початковими у сезоні (весна, літо, осінь, зима).</li>
+    </ol>
+
+    <script>
+      const incomesList = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
+
+      const sumYear = getIncomeSum(incomesList, 1, 12)
+      const sum_1_6 = getIncomeSum(incomesList, 1, 6)
+      const sum_7_12 = getIncomeSum(incomesList, 7, 12)
+      const sum_6_8 = getIncomeSum(incomesList, 6, 8)
+      const sum_evenMonth = getIncomeEvenMonthSum(incomesList, 1, 12)
+      const sum_startSeasons = getIncomeSpecifiedMonthSum(
+        incomesList,
+        3,
+        6,
+        9,
+        12
+      )
+
+      document.write(`
+			Сумарна кількість грошей:<br>
+		 		- за весь рік = ${sumYear}  грн. <br>
+				- у першій половині року = ${sum_1_6}  грн. <br>
+				- у другій половині року = ${sum_7_12}  грн. <br>
+				- за літо = ${sum_6_8}  грн. <br>
+				- за ІІ квартал = ${getIncomeSum(incomesList, 4, 6)}  грн. <br>
+				- за парні місяці (з парними номерами) = ${sum_evenMonth}  грн. <br>
+				- за місяці, які є початковими у сезоні (весна, літо, осінь, зима) = ${sum_startSeasons}  грн.
+			`)
+
+      function getIncomeSum(incomesList, startMonthNumber, endMonthNumber) {
+        let sum = 0
+        for (
+          let month = startMonthNumber - 1;
+          month < endMonthNumber;
+          month++
+        ) {
+          sum += incomesList[month]
+        }
+        return sum
+      }
+
+      function getIncomeEvenMonthSum(
+        incomesList,
+        startMonthNumber,
+        endMonthNumber
+      ) {
+        let sum = 0
+        for (
+          let month = startMonthNumber - 1 + (startMonthNumber % 2);
+          month < endMonthNumber;
+          month += 2
+        ) {
+          sum += incomesList[month]
+        }
+        return sum
+      }
+
+      function getIncomeSpecifiedMonthSum(incomesList, ...monthNumbers) {
+        let sum = 0
+        for (let i = 0; i < monthNumbers.length; i++) {
+          sum += incomesList[monthNumbers[i] - 1]
+
+          console.log(incomesList[monthNumbers[i] - 1])
+        }
+        return sum
+      }
+    </script>
+  </body>
+</html>

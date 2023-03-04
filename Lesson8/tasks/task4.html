@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 4</h3>
+    <p>
+      Дано послідовність номерів автомобілів. Підрахувати кількість номерів, які
+      :
+    </p>
+    <ul>
+      <li>- починаються на букву «А»;</li>
+      <li>- перша і остання літери співпадають;</li>
+      <li>- складаються з більше ніш 5 символів.</li>
+    </ul>
+
+    <script>
+      const listNumber = [
+        "AA4575CA",
+        "BO2245BA",
+        "AO2245BA",
+        "CO2245BA",
+        "AO2245CA",
+        "DEV",
+      ]
+
+      const numberStart_A = getNumberStart_A(listNumber)
+      const numberSameLetters = getNumberSameLetters(listNumber)
+      const numberMore_8Symbol = getNumberMore_8Symbol(listNumber)
+
+      document.write(`
+      	Кількість номерів, які:<br>
+      		- починаються на букву «А» = ${numberStart_A} <br>
+      		- перша і остання літери співпадають = ${numberSameLetters} <br>
+      		- складаються з більше ніж 5 символів = ${numberMore_8Symbol}.
+      `)
+
+      function getNumberStart_A(arr) {
+        let count = 0
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i][0] === "A") count++
+        }
+
+        return count
+      }
+
+      function getNumberSameLetters(arr) {
+        let count = 0
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i][0] === arr[i][arr[i].length - 1]) count++
+          console.log(arr[i][arr[i].length - 1])
+        }
+        return count
+      }
+
+      function getNumberMore_8Symbol(arr) {
+        let count = 0
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i].length > 5) count++
+        }
+        return count
+      }
+    </script>
+  </body>
+</html>
