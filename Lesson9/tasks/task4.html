@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 4</h3>
+    <p>
+      Дано масив елементів. Вивести на екран елементи, що більші за 100
+    </p>
+
+    <script>
+		const userNumberElements = parseInt(prompt('Кількість елементів = '))
+		const userNumberMin = parseInt(prompt('Мінімальне значення = '))
+		const userNumberMax = parseInt(prompt('Максимальне значення = '))
+
+		let arr = createArray(userNumberElements, userNumberMin, userNumberMax)
+		let newArr = []
+
+		for (const element of arr) {
+			if (element > 100) newArr.push(element)
+		}
+
+		document.write(`
+				Масив чисел: [${arr}] <br>
+				Елементи, які більші за 100: [${newArr}]
+		`)
+
+		function getRandomNumb(minV, maxV) {
+      	return minV + Math.floor(Math.random() * (maxV - minV + 1))
+      }
+
+		function createArray(numberElements, minV, maxV) {
+			let arr = []
+
+			for (let i = 0; i < numberElements; i++) {
+				arr[i] = getRandomNumb(minV, maxV)
+			}
+
+			return arr
+		}
+    </script>
+  </body>
+</html>

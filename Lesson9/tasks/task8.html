@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 8</h3>
+    <p>
+      Дано масив номерів авто. Сформувати новий масив тих, які починаються на «А».
+    </p>
+
+    <script>
+      const userNumberElements = parseInt(prompt('Кількість номерів у списку = '))
+
+		const listNumbersCar = createNumberCar(userNumberElements)
+		let numbersBegin_A = listNumbersCar.filter(number => number[0] === 'A')
+
+		document.write(`
+			Номери авто: [${listNumbersCar}] <br>
+			Номери авто починаються на "А": [${numbersBegin_A}]
+		`)
+
+		function getRandomNumb(minV, maxV) {
+        return minV + Math.floor(Math.random() * (maxV - minV + 1))
+      }
+
+		function createNumberCar(numberElements) {
+			const letters = ['A', 'B', 'C', 'K', 'O', 'A']
+			let listNumbersCar = []
+			
+			for (let i = 0; i < numberElements; i++) {
+				let number = []
+				for (let j = 0; j < 8; j++) {
+					if (j < 2 || j > 5) number += letters[getRandomNumb(0, 5)]
+					else number += getRandomNumb(0, 9)
+				}
+				listNumbersCar.push(number)
+			}
+			return listNumbersCar
+		}
+    </script>
+  </body>
+</html>

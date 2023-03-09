@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 6</h3>
+    <p>
+      Дано масив елементів. Усі елементи, які більші за перший елемент помножити на 2.
+    </p>
+
+    <script>
+      const userNumberElements = parseInt(prompt('Кількість елементів = '))
+		const userNumberMin = parseInt(prompt('Мінімальне значення = '))
+		const userNumberMax = parseInt(prompt('Максимальне значення = '))
+
+		let arr = createArray(userNumberElements, userNumberMin, userNumberMax)
+
+		let arr2 = arr.map((element, index, arrRef) => {
+			if (element > arrRef[0]) element *= 2
+			return element
+		})
+
+		document.write(`
+			Масив елементів: ${arr} <br>
+			Новий масив елементів: ${arr2}
+		`)
+
+		function getRandomNumb(minV, maxV) {
+        return minV + Math.floor(Math.random() * (maxV - minV + 1))
+      }
+
+		function createArray(numberElements, minV, maxV) {
+			let arr = []
+
+			for (let i = 0; i < numberElements; i++) {
+				arr[i] = getRandomNumb(minV, maxV)
+			}
+
+			return arr
+		}
+    </script>
+  </body>
+</html>

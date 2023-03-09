@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 7</h3>
+    <p>
+      Дано масив цін. Змінити цей масив так, що на ціни товарів, які більші за 1000 грн. дати 30% знижки.
+    </p>
+
+    <script>
+      const userNumberElements = parseInt(prompt('Кількість елементів масиву = '))
+		const userNumberMin = parseInt(prompt('Мінімальне значення ціни = '))
+		const userNumberMax = parseInt(prompt('Максимальне значення ціни = '))
+
+		let prices = createArray(userNumberElements, userNumberMin, userNumberMax)
+		let discountPrices = prices.map(price => {
+			if (price > 1000) price = price *= 0.7
+
+			return price.toFixed(2)
+		})
+
+		document.write(`
+			Список цін - ${prices} <br>
+			Список цін зі знижкою 30% - ${discountPrices}
+		`)
+
+		function getRandomNumb(minV, maxV) {
+        return minV + Math.floor(Math.random() * (maxV - minV + 1))
+      }
+
+		function createArray(numberElements, minV, maxV) {
+			let arr = []
+
+			for (let i = 0; i < numberElements; i++) {
+				arr[i] = getRandomNumb(minV, maxV)
+			}
+
+			return arr
+		}
+    </script>
+  </body>
+</html>
