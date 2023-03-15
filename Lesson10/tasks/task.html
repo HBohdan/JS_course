@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання</h3>
+    <p>
+      Дано історію цін на цінні папери за деякий період (згенерувати від 1 до 10000).
+    </p>
+	 <ol>
+		<li>Сформувати новий масив, у якому є тільки ті, що більші за 1000 грн.</li>
+		<li>Сформувати новий масив, у якому є номери тільки тих, що більші за 1000 грн.</li>
+		<li>Сформувати список з тих цін, які більші за попереднє значення.</li>
+		<li>Сформувати новий масив, що міститиме значення цін у відсотках стосовно максимального.</li>
+		<li>Підрахувати кількість змін цін.</li>
+		<li>Визначити, чи є ціна, що менше 1000.</li>
+		<li>Визначати, чи усі ціни більше за 1000.</li>
+		<li>Підрахувати кількість цін, що більше за 1000.</li>
+		<li>Підрахувати суму цін, що більше за 1000.</li>
+		<li>Знайти першу ціну, що більше за 1000.</li>
+		<li>Знайти індекс першої ціни, що більше за 1000.</li>
+		<li>Знайти останню ціну, що більше за 1000.</li>
+		<li>Знайти індекс останньої ціни, що більше за 1000.</li>
+	</ol>
+
+    <script>
+		const userPeriod = parseInt(prompt('Період, днів = '))
+      let priceHistory = new Array(userPeriod).fill(0).map(element => element = getRandomNumb(1, 10000))
+		console.log(priceHistory)
+
+		// 1. Сформувати новий масив, у якому є тільки ті, що більші за 1000 грн.		
+		const greaterThan_1000 = priceHistory.filter(price => price > 1000)
+
+		// 2. Сформувати новий масив, у якому є номери тільки тих, що більші за 1000 грн.
+		const indexGreaterThan_1000 = priceHistory.reduce((acc, price, index) => 
+			price > 1000 ? [...acc, index] : acc,
+			[])
+
+		// 3. Сформувати список з тих цін, які більші за попереднє значення.
+		const moreThanPreviousValue = priceHistory.reduce((acc, price, index, arrRef) =>
+		price > arrRef[index - 1] ? [...acc, price] : acc,
+		[])
+		// 4. Сформувати новий масив, що міститиме значення цін у відсотках стосовно максимального.
+		const maxNumber = priceHistory.reduce((preMax, price) => price > preMax ? price : preMax)
+		const valuePricesPercentageOfMaximum = priceHistory.map(price => 100 / maxNumber * price)
+
+		//  5. Підрахувати кількість змін цін.
+		const numberPriceChanges = priceHistory.reduce((count, price, index, arrRef) => {
+			if (price !== arrRef[index + 1] && arrRef[index + 1] !== undefined) count++
+			return count			
+		}, 0)
+
+		// 6. Визначити, чи є ціна, що менше 1000.
+		const isPriceLess_1000 = priceHistory.some(elem => elem < 1000)
+
+		// 7. Визначати, чи усі ціни більше за 1000.
+		const isPricesBigger_1000 = priceHistory.every(elem => elem > 1000)
+
+		// 8. Підрахувати кількість цін, що більше за 1000.
+		const numberPricesBigger_1000 = priceHistory.reduce((count, el) =>	el > 1000 ? count + 1 : count, 0)
+
+		// 9. Підрахувати суму цін, що більше за 1000.
+		const sumPricesBigger_1000 = priceHistory.reduce((sum, el) => el > 1000 ? sum + el: sum, 0)
+		
+		// 10. Знайти першу ціну, що більше за 1000.
+		const firstPriceBigger_1000 = priceHistory.find(el => el > 1000)
+		
+		// 11. Знайти індекс першої ціни, що більше за 1000.
+		const indexFirstPriceBigger_1000 = priceHistory.findIndex(el => el > 1000)
+		
+		// 12. Знайти останню ціну, що більше за 1000.
+		const lastPriceBigger_1000 = priceHistory.findLast(el => el > 1000)
+		
+		// 13. Знайти індекс останньої ціни, що більше за 1000.
+		const indexLastPriceBigger_1000 = priceHistory.findLastIndex(el => el > 1000)
+		console.log(indexLastPriceBigger_1000)
+
+
+
+
+
+		function getRandomNumb(minV, maxV) {
+      	return minV + Math.floor(Math.random() * (maxV - minV + 1))
+      }
+
+
+    </script>
+  </body>
+</html>
