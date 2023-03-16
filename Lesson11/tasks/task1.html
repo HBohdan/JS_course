@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 1</h3>
+    <p>
+      Знайти суми елементів у вказаній області.
+    </p>
+
+    <script>
+		const table = generateRandomTable(4, 4, 1, 10)
+		console.log(table)
+
+		// 1. Сума елементів у другій чверті (лівий верхній кут)
+		const sumSecondQuarter = getSumArea(table, 0, 1, 0, 1)
+
+		// 2. Сума елементів у першій чверті (правий верхній кут)
+		const sumFirstQuarter = getSumArea(table, 0, 1, 2, 3)
+
+		// 3. Сума елементів у третій чверті (лівий нижній кут)
+		const sumThirdQuarter = getSumArea(table, 2, 3, 0, 1)
+
+		// 4. Сума елементів у четвертій чверті (правий нижній кут)
+		const sumFourthQuarter = getSumArea(table, 2, 3, 2, 3)
+		
+		// функція для знаходження суми у вказаній області
+		function getSumArea(arr, startRowInd, endRowInd, startColInd, endColInd) {
+			let sum = 0
+			for (let i = startRowInd; i <= endRowInd; i++) {
+				for (let j = startColInd; j <= endColInd; j++) {
+					sum += arr[i][j]
+				}
+			}
+			return sum
+		}
+
+		// 5. Сума парних рядків
+		const evenRows = 1
+		const oddRows = 2
+		const sumEvenRows = getSumFromRows(evenRows, table)
+
+		// 6. Сума непарних стовпців
+		const evenColumns = 1
+		const oddColumns = 2
+		const sumOddColumns = getSumFromColumns(oddColumns, table)
+
+		// 7. Сума у парних рядках непарні стовпці, у неппарних - парні
+		const sumEvenRowsOddColumns = getSumFromRowsAndColumns(evenRows, oddColumns, table)
+		const sumOddRowsEvenColumns = getSumFromRowsAndColumns(oddRows, evenColumns, table)
+		console.log(sumOddRowsEvenColumns)
+
+		// знаходження суми по парних або непарних рядках
+		function getSumFromRows(evenOrOddRow, arr) {
+			let sum = 0
+			for (let i = 0 + (evenOrOddRow % 2); i < arr.length; i += 2) {
+				for (let j = 0; j < arr[i].length; j++) {
+					sum += arr[i][j]
+				}
+			}
+			return sum
+		}
+
+		// знаходження суми по парних або непарних стовпцях
+		function getSumFromColumns(evenOrOddColumn, arr) {
+			let sum = 0
+			for (let i = 0; i < arr.length; i++) {
+				for (let j = 0 + (evenOrOddColumn % 2); j < arr[i].length; j += 2) {
+					sum += arr[i][j]
+				}
+			}
+			return sum
+		}		
+
+		// знаходження суми по парних/непарних стовпцях у парних/непарних рядках
+		function getSumFromRowsAndColumns(evenOrOddRow, evenOrOddColumn, arr) {
+			let sum = 0
+			for (let i = 0 + (evenOrOddRow % 2); i < arr.length; i += 2) {
+				for (let j = 0 + (evenOrOddColumn % 2); j < arr[i].length; j += 2) {
+					sum += arr[i][j]
+				}
+			}
+			return sum
+		}
+		
+		function getRandomNumb(minV, maxV) {
+      	return minV + Math.floor(Math.random() * (maxV - minV + 1))
+      }
+
+		function generateRandomTable(rowNumb, columnNumb, minV, maxV) {
+			const table = []
+			for (let i = 0; i < rowNumb; i++) {
+				const row = []
+				for (let j = 0; j < columnNumb; j++) {
+					const randNum = getRandomNumb(minV, maxV)
+					row.push(randNum)
+				}
+				table.push(row)
+			}
+			return table
+		}
+
+
+    </script>
+  </body>
+</html>

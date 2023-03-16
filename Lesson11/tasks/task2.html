@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 2</h3>
+    <p>
+      Дано інформацію про прибуток К магазинів протягом тижня. Знайти :
+    </p>
+
+    <script>
+		const numberStores = parseInt(prompt('Кількість магазинів, K = '))
+		const profitInformation = generateRandomTable(numberStores, 7, 1, 300)
+		console.log(profitInformation)
+
+		// 1. загальний прибуток кожного магазину за тиждень
+		const totalProfit = getTotalProfit(numberStores, profitInformation)
+		printTotalProfitEachStoreForWeek(totalProfit)
+
+		function getTotalProfit(kStores, listProfits) {
+			let totalProfit = []
+			for (let i = 0; i < kStores; i++) {
+				let sumTotalWeek = 0
+				for (let j = 0; j < 7; j++) {
+					sumTotalWeek += listProfits[i][j]
+				}
+				totalProfit.push(sumTotalWeek)
+			}
+			return totalProfit
+		}
+
+		function printTotalProfitEachStoreForWeek(listTotalProfit) {
+			let print = ''
+			let count = 1
+			for (store of listTotalProfit) {
+				print += `магазин №${count} = ${store} у.о. <br>`
+				count++
+			}
+			document.write(`
+				1. Загальний прибуток кожного магазину за тиждень:<br>
+					${print}
+			`)
+		}
+		
+		// 2. загальний прибуток усіх магазинів по дням (загальний прибуток усіх магазинів за понеділок, за вівторок, і т.д.);
+		const totalProfitAllStoresByDay = getTotalProfitAllStoresByDay(profitInformation)
+		printTotalProfitAllStoresByDay(totalProfitAllStoresByDay)
+
+		function getTotalProfitAllStoresByDay(listProfits) {
+			let totalProfitAllStoresByDay = []
+			for (let day = 0; day < 7; day++) {
+				let sumPerDay = 0
+				for (let store = 0; store < listProfits.length; store++) {
+					sumPerDay += listProfits[store][day]
+				}
+				totalProfitAllStoresByDay.push(sumPerDay)
+			}
+			return totalProfitAllStoresByDay
+		}
+
+		function printTotalProfitAllStoresByDay(listProfits) {
+			let print = ''
+			const days = ['Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П\'ятниця', 'Субота', 'Неділя']
+			for (let day = 0; day < days.length; day++) {
+				print += `${days[day]} = ${listProfits[day]} у.о. <br>`
+			}
+			
+			document.write(`
+				<br>
+				2. Загальний прибуток усіх магазинів по днях: <br>
+					${print}
+			`)
+		}
+
+		// 3. загальний прибуток за робочі дні
+		const profitWorkingDays = getProfitDays(profitInformation, 0, 4)
+		document.write(`<br> 3. Загальний прибуток за робочі дні = ${profitWorkingDays} у.о.<br>`)
+		
+		// 4. загальний прибуток за вихідні дні
+		const profitWeekendDays = getProfitDays(profitInformation, 5, 6)
+		document.write(`<br> 4. Загальний прибуток за вихідні дні = ${profitWeekendDays} у.о.<br>`)
+
+		function getProfitDays(listProfits, startDay, endDay) {
+			let totalProfit = 0
+			for (let store = 0; store < listProfits.length; store++) {
+				for (let day = startDay; day <= endDay; day++) {
+					totalProfit += listProfits[store][day]
+				}
+			}
+			return totalProfit
+		}
+
+		// 5. максимальний прибуток за середу
+		const maxProfitWednesday = getMaxProfitDay(profitInformation, 2)
+		document.write(`<br> 5. Максимальний прибуток за середу = ${maxProfitWednesday} у.о.<br>`)
+
+		function getMaxProfitDay(listProfits, dayNum) {
+			let sumProfit = 0
+			for (let store of listProfits) {
+				if (store[dayNum] > sumProfit) sumProfit = store[dayNum]
+			}
+			return sumProfit
+		}
+
+		// 6. сформувати загальний список (одновимірний масив) зі значенням, які більші за 200
+		const listValuesGreater_200 = getValuesGreaterThan_value(profitInformation, 200)
+		document.write(`<br> 6. Загальний список значень, які більші за 200 - [${listValuesGreater_200}] <br>`)
+
+		function getValuesGreaterThan_value(listProfits, value) {
+			listValues = []
+			for (let store of listProfits) {
+				store.forEach(el => {
+					if (el > value) listValues.push(el)
+				})
+			}
+			return listValues
+		}
+
+		// 7. відсортувати кожен тиждень за зростанням
+		const sortByGrowth = totalProfit.sort((a, b) => a - b)
+		document.write(`<br> 7. Сортування за зростанням - [${sortByGrowth}] <br>`)
+
+		// 8. відсортувати тижні (рядки) за спаданням максимального елемента у цьому тижні (рядку), тобто при порівнянні рядків потрібно порівнювати максимальні елементи у кожному з цих рядків
+		const listMaxValues = getListMaxValues(profitInformation)
+		const sortDescending = listMaxValues.sort((a, b) => b - a)
+		document.write(`<br> 8. Сортування за спаданням по максимальному значенні - [${sortDescending}] <br>`)
+
+		function getListMaxValues(listProfits) {
+			let listMaxValue = []
+			for (let store of listProfits) {
+				let maxInStore = 0
+				for (let elem of store) {
+					if (elem > maxInStore) maxInStore = elem
+				}
+				listMaxValue.push(maxInStore)
+			}
+			return listMaxValue
+		}
+
+		// 9. упорядкувати тижні (рядки) за спаданням суми елементів у рядку (тобто при порівнянні двох рядків треба знайти суму кожного з рядків і порівнювати ці суми, на основі цих сум буде зрозуміло, який з елементів повинен іти раніше)
+		const sortDecreasingSumElements = totalProfit.sort((a, b) => b - a)
+		document.write(`<br> 9. Сортування за спаданням суми елементів у рядку - [${sortDecreasingSumElements}] <br>`)
+
+		
+
+		
+		function getRandomNumb(minV, maxV) {
+      	return minV + Math.floor(Math.random() * (maxV - minV + 1))
+      }
+
+		function generateRandomTable(rowNumb, columnNumb, minV, maxV) {
+			const table = []
+			for (let i = 0; i < rowNumb; i++) {
+				const row = []
+				for (let j = 0; j < columnNumb; j++) {
+					const randNum = getRandomNumb(minV, maxV)
+					row.push(randNum)
+				}
+				table.push(row)
+			}
+			return table
+		}
+
+
+    </script>
+  </body>
+</html>

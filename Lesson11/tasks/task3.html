@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 3</h3>
+    <p>
+      Морський бій. Випадковим чином на двовимірному полі розміром 6*6 розташовується 5 кораблів. Користувач стріляє вказуючи координати. Гра продовжується поки не потоплено усі кораблі або у користувача не закінчаться снаряди.
+    </p>
+
+    <script>
+		const userNumberShot = parseInt(prompt('Кількість пострілів = '))
+		const playingField = getPlayingField(6, 6)
+		const numberShips = 5
+
+		fillTheFieldWithShips(playingField, numberShips, 0, 5)
+
+		const numberShot = takeShots(playingField, 5, userNumberShot)
+
+		document.write(`
+			Знищено кораблів - ${numberShot[0]}<br> 
+			Кількість пострілів - ${numberShot[1]}
+		`)
+
+		function getPlayingField(width, height) {
+			let playingField = []
+			for (let i = 0; i < width; i++) {
+				let row = []
+				for (let j = 0; j < height; j++) {
+					row.push(0)
+				}
+				playingField.push(row)
+			}
+			console.log(playingField)
+			return playingField
+		}
+
+		function getRandomNumb(minV, maxV) {
+      	return minV + Math.floor(Math.random() * (maxV - minV + 1))
+      }
+
+		function fillTheFieldWithShips(field, ships, minV, maxV) {
+			let countShips = ships
+			do {
+				let coordinate_X = getRandomNumb(minV, maxV)
+				let coordinate_Y = getRandomNumb(minV, maxV)
+				if (field[coordinate_X][coordinate_Y] === 0) {
+					field[coordinate_X][coordinate_Y] = 1
+					countShips--
+				}
+			} while (countShips > 0);			
+		}
+
+		function takeShots(field, numbShips, numbShot) {
+			let countShips = numbShips
+			let destroyedShips = 0
+      	let countShot = 1
+
+			for (let i = 0; i < numbShot; i++, countShot++) {
+				
+				let user_X = parseInt(
+					prompt(
+						`Знищено кораблів - ${destroyedShips}. Постріл - ${countShot}<br>
+					Для пострілу введіть координату "X", від 1 до 6:
+				`))
+				let user_Y = parseInt(
+					prompt(
+						`Знищено кораблів - ${destroyedShips}. Постріл - ${countShot}<br>
+					Для пострілу введіть координату "Y", від 1 до 6:
+				`))
+
+				if (field[user_X - 1][user_Y - 1] === 1) {
+					destroyedShips++
+					countShips--
+				}				
+
+				if (countShips === 0) break
+
+			}
+
+			// після циклу for значення countShot на один більлше від очікуваного.
+			// Чому додається +1 до countShot?
+			
+			return [destroyedShips, countShot-1]
+		}
+    </script>
+  </body>
+</html>

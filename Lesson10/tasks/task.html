@@ -43,13 +43,10 @@
 		}, [])
 
 		// 3. Сформувати список з тих цін, які більші за попереднє значення.
-		const moreThanPreviousValue = priceHistory.reduce((acc, price, index, arrRef) => {
-		console.log(arrRef[index + 1])
-		console.log(price)
-			if (arrRef[index + 1] > price && arrRef[index + 1] !== undefined) acc.push(arrRef[index + 1])
-			return acc
-		}, [])		
-		console.log(moreThanPreviousValue)
+		const moreThanPreviousValue = []
+		for (let i = 1; i < priceHistory.length; i++) {
+			if (priceHistory[i] > priceHistory[i - 1]) moreThanPreviousValue.push(priceHistory[i])
+		}
 
 		// 4. Сформувати новий масив, що міститиме значення цін у відсотках стосовно максимального.
 		const maxNumber = priceHistory.reduce((preMax, price) => price > preMax ? price : preMax)
