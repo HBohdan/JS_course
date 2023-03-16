@@ -37,14 +37,20 @@
 		const greaterThan_1000 = priceHistory.filter(price => price > 1000)
 
 		// 2. Сформувати новий масив, у якому є номери тільки тих, що більші за 1000 грн.
-		const indexGreaterThan_1000 = priceHistory.reduce((acc, price, index) => 
-			price > 1000 ? [...acc, index] : acc,
-			[])
+		const indexGreaterThan_1000 = priceHistory.reduce((acc, price, index) => {
+			if (price > 1000) acc.push(index)
+			return acc
+		}, [])
 
 		// 3. Сформувати список з тих цін, які більші за попереднє значення.
-		const moreThanPreviousValue = priceHistory.reduce((acc, price, index, arrRef) =>
-		price > arrRef[index - 1] ? [...acc, price] : acc,
-		[])
+		const moreThanPreviousValue = priceHistory.reduce((acc, price, index, arrRef) => {
+		console.log(arrRef[index + 1])
+		console.log(price)
+			if (arrRef[index + 1] > price && arrRef[index + 1] !== undefined) acc.push(arrRef[index + 1])
+			return acc
+		}, [])		
+		console.log(moreThanPreviousValue)
+
 		// 4. Сформувати новий масив, що міститиме значення цін у відсотках стосовно максимального.
 		const maxNumber = priceHistory.reduce((preMax, price) => price > preMax ? price : preMax)
 		const valuePricesPercentageOfMaximum = priceHistory.map(price => 100 / maxNumber * price)
@@ -78,7 +84,6 @@
 		
 		// 13. Знайти індекс останньої ціни, що більше за 1000.
 		const indexLastPriceBigger_1000 = priceHistory.findLastIndex(el => el > 1000)
-		console.log(indexLastPriceBigger_1000)
 
 
 
