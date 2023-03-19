@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 1</h3>
+    <p>
+      Дано масив 30 випадкових цілих чисел. Підрахувати скільки було обмінів під час сортування бульбашкою.
+    </p>
+
+    <script>
+		const arrRandom = new Array(30).fill(0).map(elem => getRandomNumb(1, 50))
+		const resultBubbleSort = bubbleSort(arrRandom)
+
+		document.write(`Кількість обмінів = ${resultBubbleSort}`)
+
+		function bubbleSort(arr) {
+			let exchangeNumber = 0
+
+			let lengthArray = arr.length // зі скороченням довжини arr на 30% - 50% ітерацій менше
+			let changed
+
+			do {
+				changed = false
+				
+				for (let i = 1; i < lengthArray; i++) {
+					if (arr[i - 1] > arr[i]) {
+						[arr[i - 1], arr[i]] = [arr[i], arr[i - 1]]
+						exchangeNumber++
+						changed = true
+					}
+				}
+				lengthArray--
+			} while (changed)
+
+			return exchangeNumber
+		}
+		
+		function getRandomNumb(minV, maxV) {
+      	return minV + Math.floor(Math.random() * (maxV - minV + 1))
+      }
+
+    </script>
+  </body>
+</html>
