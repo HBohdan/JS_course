@@ -126,20 +126,46 @@
 		document.write(`<br> 7. Сортування за зростанням - [${sortByGrowth}] <br>`)
 
 		// 8. відсортувати тижні (рядки) за спаданням максимального елемента у цьому тижні (рядку), тобто при порівнянні рядків потрібно порівнювати максимальні елементи у кожному з цих рядків
-		const listMaxValues = getListMaxValues(profitInformation)
-		const sortDescending = listMaxValues.sort((a, b) => b - a)
-		document.write(`<br> 8. Сортування за спаданням по максимальному значенні - [${sortDescending}] <br>`)
+		
+		const sortDescending = profitInformation.map(
+			(row) => row.reduce((prevMax, el) => prevMax > el ? prevMax : el)
+		)
+		
+		const matrCopy = JSON.parse(JSON.stringify(profitInformation))
+		const sortedMatr = sortSelect(sortDescending, matrCopy)
 
-		function getListMaxValues(listProfits) {
-			let listMaxValue = []
-			for (let store of listProfits) {
-				let maxInStore = 0
-				for (let elem of store) {
-					if (elem > maxInStore) maxInStore = elem
-				}
-				listMaxValue.push(maxInStore)
+		
+		document.write(`<br> 
+			8. Сортування за спаданням по максимальному значенні - ${printSoreMatr(sortedMatr)} <br>`
+		)
+
+		function printSoreMatr(arr) {
+			let print = ''
+			for (row of arr) {
+				print += `[${row}]`
 			}
-			return listMaxValue
+			return print
+		}
+
+		function sortSelect(arrMax, arrList) {
+			const preLastIndex = arrMax.length - 1
+			for (let i = 0; i < preLastIndex; i++) {
+				let currentMaxIndex = i
+				for (let j = i + 1; j < arrMax.length; j++) {
+					if(arrMax[j] > arrMax[currentMaxIndex]) currentMaxIndex = j
+				}
+
+				if (i !== currentMaxIndex) {
+					let tmp = arrMax[i]
+					arrMax[i] = arrMax[currentMaxIndex]
+					arrMax[currentMaxIndex] = tmp
+
+					tmp = arrList[i]
+					arrList[i] = arrList[currentMaxIndex]
+					arrList[currentMaxIndex] = tmp
+				}
+			}			
+			return arrList
 		}
 
 		// 9. упорядкувати тижні (рядки) за спаданням суми елементів у рядку (тобто при порівнянні двох рядків треба знайти суму кожного з рядків і порівнювати ці суми, на основі цих сум буде зрозуміло, який з елементів повинен іти раніше)

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 2</h3>
+    <p>
+      Нехай x0 = x1 = 1, xi = xi-1 + 2xi-2, де i = 2,3,.... Визначити Xn. Розв’язати з використанням рекурсивних і нерекурсивних алгоритмів
+    </p>
+
+    <script>
+		let i = 6
+		let x = expRecursion(i)
+
+		document.write(`X${i} = ${x}`)
+
+		function expRecursion(i) {
+			if (i === 0 || i === 1) return 1
+			else return expRecursion(i - 1) + 2 * expRecursion(i - 2)
+		}
+
+		function expression(i) {
+			if (i === 0 || i === 1) return 1
+			else {
+				let num 
+				let num_i_1 = num_i_2 = 1
+				for (let k = 2; k <= i; k++) {
+					num = num_i_1 + 2 * num_i_2
+					num_i_2 = num_i_1
+					num_i_1 = num
+				}
+				return num
+			}			
+		}
+    </script>
+  </body>
+</html>

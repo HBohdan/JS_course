@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 4</h3>
+    <p>
+      З використанням замикань розробити ітератор, тобто функцію, що буде поступово за окремими викликами видавати по одну букву наперед заданого слова. З використанням нього розробити гру «Прекладач». Виводимо для користувача опис цього слова і по одну букву користувач вводить переклад цього слова. Підрахувати кількість вгаданих букв.
+    </p>
+
+    <script>
+		let dictionary = [
+			['словник', 'dictionary'],
+			['перекладач', 'translator'],
+			['програміст', 'programmer'],
+			['сонце', 'sun']
+		]
+
+		
+		let resultOfGame = startGame(dictionary)
+
+		document.write(resultOfGame)
+
+		function startGame(arr) {
+			let randomNumb = getRandomNumb(0, dictionary.length-1)
+			let wordUa = dictionary[randomNumb][0]
+			let wordEn = dictionary[randomNumb][1]
+			console.log(wordEn)
+
+			let counterGuessedLetters = createCounter(0)
+			let resultCountGuessedLetters = 0
+			let resultGuessedWord = []
+			
+			for (let i = 0; i < wordEn.length; i++) {
+				userLetter = prompt(`Перекладіть англійською слово "${wordUa}". Введіть ${i+1} літеру слова:`)
+				if (isFinite(userLetter)) {
+					return `Good luck!!!`
+				} else {					
+					if (userLetter === wordEn[i]) {
+						resultGuessedWord += userLetter
+						resultCountGuessedLetters = counterGuessedLetters()
+					}
+					else resultGuessedWord += '*'
+				}					
+			}
+			if (resultCountGuessedLetters === wordEn.length)
+				return `Ви правильно переклали слово "${wordUa}" - ${resultGuessedWord}.`
+			
+			return `Слово "${wordUa}" англійською - "${wordEn}". Ваш результат - ${resultGuessedWord}, кількість правильних букв = ${resultCountGuessedLetters}.`
+		}
+		
+		function createCounter(startValue) {
+			let currentValue = startValue
+			return () => {
+				currentValue++
+				return currentValue
+			}
+		}
+
+		function getRandomNumb(minV, maxV) {
+			return Math.floor(Math.random() * (maxV - minV + 1)) + minV
+		}
+    </script>
+  </body>
+</html>

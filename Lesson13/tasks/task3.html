@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 3</h3>
+    <p>
+      З використанням замикань розробити ітератор, тобто функцію, що буде поступово за окремими викликами видавати по одне значення від заданого мінімального до заданого максимального. Якщо значення досягне максимального, то наступним буде мінімальне значення. З використанням цієї функції реалізувати перебір номерів місяців. 
+    </p>
+
+    <script>
+
+		function countMonths(minV, maxV=12) {
+			let currentValue = minV
+			return () => {
+				if (currentValue > maxV) currentValue = minV
+				return currentValue++
+			}
+		}
+
+		let cntr1 = countMonths(10)
+
+		console.log(cntr1())
+		console.log(cntr1())
+		console.log(cntr1())
+		console.log(cntr1())
+    </script>
+  </body>
+</html>

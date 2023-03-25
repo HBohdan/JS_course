@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 5</h3>
+    <p>
+      Тренажер додавання. Кожні 10 секунд користувачу задають випадковий приклад з додавання двох цифр і робиться перевірка.
+    </p>
+
+    <script>
+		let intervalID = setInterval(startSimulator, 10000)
+
+		function startSimulator() {
+			let firstNum = getRandomNumb(1, 10)
+			let secondNum = getRandomNumb(1, 10)
+			let sum = firstNum + secondNum
+
+			let userAnswer = parseInt(prompt(`Сума: ${firstNum} + ${secondNum} = `))
+
+			if (!isFinite(userAnswer)) {
+				alert('Good luck!!!')
+				clearInterval(intervalID)
+			} else {
+				if (userAnswer === sum) alert('Правильно!')
+				else alert('Не правильно... (')
+			}
+		}
+
+		function getRandomNumb(minV, maxV) {
+			return Math.floor(Math.random() * (maxV - minV + 1)) + minV
+		}
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 1</h3>
+    <p>
+      Нехай x0 = 1, xi = xi-1 + 2i, де i = 1, 2,... . Визначити x10. Розв’язати з використанням рекурсивних і нерекурсивних алгоритмів.
+    </p>
+
+    <script>
+		let i = 10
+		let x = expression(i)
+
+		document.write(`X${i} = ${x}`)
+
+		function expression(i) {
+			let result = 1
+			for (let k = 1; k <= i; k++) result += 2 * k				
+			
+			return result
+		}
+
+		function expRecursion(i) {
+			return i === 0 ? 1 : expRecursion(i - 1) + 2 * i
+		}
+
+    </script>
+  </body>
+</html>
