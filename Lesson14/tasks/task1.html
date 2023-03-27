@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 1</h3>
+    
+
+    <script>
+		let listCompletedProjects = [
+			{
+				companyName: 'Company_1',
+				companyOwner: 'Hadlee Diaz',
+				sponsors: [
+					{
+						lastName: 'Tristian',
+						firstName: 'Jackson',
+						investmentAmount: 5000
+					}
+				],
+				year: 1995,
+				price: 8000
+			},
+			{
+				companyName: 'Company_2',
+				companyOwner: 'Jackson Ward',
+				sponsors: [
+					{
+						lastName: 'Perseus',
+						firstName: 'Coleman',
+						investmentAmount: 200000
+					},
+					{
+						lastName: 'Harlan',
+						firstName: 'Perez',
+						investmentAmount: 20000
+					},
+				],
+				year: 2005,
+				price: 15000000
+			},
+			{
+				companyName: 'Company_3',
+				companyOwner: 'Emiliano Bryant',
+				sponsors: [
+					{
+						lastName: 'Vincenzo',
+						firstName: 'Long',
+						investmentAmount: 25000
+					},
+					{
+						lastName: 'Felix',
+						firstName: 'Jones',
+						investmentAmount: 60000
+					},
+					{
+						lastName: 'Harry',
+						firstName: 'King',
+						investmentAmount: 30000
+					},
+				],
+				year: 2013,
+				price: 120000
+			},
+		]
+
+		// 1. загальна вартість усіх сайтів
+		let totalPrice = listCompletedProjects.reduce((acc, site) => acc + site.price, 0)
+		
+		// 2. кількість сайтів, що було зроблено між 2000 та 2009 рр.
+		let countSites2000_20009 = listCompletedProjects.reduce((acc, site) => 
+			site.year > 2000 && site.year < 2009 ? acc + 1 : acc, 
+		0)
+
+		// 3. кількість сайтів, де сума спонсорських вкладень була більшою за 100000
+		let countSitesMore_100_thousands = listCompletedProjects.reduce((count, site) => {
+			let totalSiteInvest = site.sponsors.reduce((total, sponsor) => total + sponsor.investmentAmount, 0)
+			return totalSiteInvest > 100000 ? ++count : count
+		}, 0)
+		// 4. створити загальний список усіх спонсорів
+		let listSponsors = []
+			for (let site of listCompletedProjects) {
+				for (let sponsor of site.sponsors) {
+					listSponsors.push(` ${sponsor.lastName} ${sponsor.firstName}`)
+				}
+			}
+			
+		// 5. знайти рік, коли прибуток був найбільшим
+		let maxPriceYear = listCompletedProjects.reduce((result, site) => 
+			site.price > result.price ? site : result
+		)
+
+		// 6. упорядкувати список за спаданням прибутку
+		let sitesDecreaseProfit = listCompletedProjects.sort((a, b) => b.price - a.price)
+		let printSitesDecreaseProfit = (arr) => {
+			let print = ''
+			for (let site of arr) {
+				print += `${site.companyName} - ${site.price}<br>`
+			}
+			return print
+		}
+
+		// 7. Створити 2 окремих списки з копіями об’єктів, що містять сайти з вартість до 10000 і більше 10000.
+		let costSitesLessThan_10000 = listCompletedProjects.filter(site => site.price < 10000)		
+		let costSitesMoreThan_10000 = listCompletedProjects.filter(site => site.price > 10000)
+
+		let printCostSites = (arr) => {
+			let print = ''
+			for (let site of arr) {
+				print += `${site.companyName} - ${site.price}<br>`
+			}
+			return print
+		}
+
+		document.write(`
+			Знайдено:<br>
+			1) загальна вартість усіх сайтів = ${totalPrice},<br>
+			2) кількість сайтів, що було зроблено між 2000 та 2009 рр. = ${countSites2000_20009},<br>
+			3) кількість сайтів, де сума спонсорських вкладень була більшою за 100000 = ${countSitesMore_100_thousands},<br>
+			4) створити загальний список усіх спонсорів (поки можуть повторюватись, просто зібрати усі у масив): ${listSponsors},<br>
+			5) знайти рік, коли прибуток був найбільшим - ${maxPriceYear.year},<br>
+			6) упорядкувати список за спаданням прибутку: <br>${printSitesDecreaseProfit(sitesDecreaseProfit)},<br>
+			7) Створити 2 окремих списки з копіями об’єктів, що містять сайти з вартістю до 10000 і більше 10000:<br>
+				- сайти з вартістю до 10000: <br>
+				${printCostSites(costSitesLessThan_10000)}<br>
+				- сайти з вартістю більше 10000: <br>
+				${printCostSites(costSitesMoreThan_10000)}<br>
+		`)
+
+    </script>
+  </body>
+</html>
