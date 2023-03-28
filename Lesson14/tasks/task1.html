@@ -106,8 +106,12 @@
 		}
 
 		// 7. Створити 2 окремих списки з копіями об’єктів, що містять сайти з вартість до 10000 і більше 10000.
-		let costSitesLessThan_10000 = listCompletedProjects.filter(site => site.price < 10000)		
-		let costSitesMoreThan_10000 = listCompletedProjects.filter(site => site.price > 10000)
+		let costSitesLessThan_10000 = []
+		let costSitesMoreThan_10000 = []
+		for (let site of listCompletedProjects) {
+			if (site.price < 10000) costSitesLessThan_10000.push(JSON.parse(JSON.stringify(site)))
+			else costSitesMoreThan_10000.push(JSON.parse(JSON.stringify(site)))
+		}
 
 		let printCostSites = (arr) => {
 			let print = ''
