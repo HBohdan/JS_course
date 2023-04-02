@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 2</h3>
+    <p>
+      Створити об’єкт «Авто». <br>
+		Поля(властивості):
+		<ul>
+			<li>Марка</li>
+			<li>Розмір бака</li>
+			<li>Кількість наявних літрів</li>
+			<li>Кількість місць</li>
+			<li>Кількість пасажирів</li>
+		</ul>
+		Методи (дії):
+		<ul>
+			<li>Заправка на вказану кількість літрів</li>
+			<li>Виведення кількості пасажирів</li>
+			<li>Додавання пасажирів</li>
+			<li>Висадка пасажирів</li>
+		</ul>
+    </p>
+
+    <script>
+		class Auto {
+			constructor(brand, tankSize, availableLiters, numberSeats, numberPassengers) {
+				this.brand = brand
+				this.tankSize = tankSize
+				this.availableLiters = availableLiters
+				this.numberSeats = numberSeats
+				this.numberPassengers = numberPassengers
+			}
+
+			refuelCar(liters) {
+				const maxLitersForRefueling = this.tankSize - this.availableLiters
+				if (liters > maxLitersForRefueling)
+					alert(`Maximum liters for refueling ${maxLitersForRefueling}`)
+				this.availableLiters += liters
+			}
+			toString() {
+				return `Кількість пасажирів = ${this.numberPassengers}`
+			}
+			addPassengers(newPassengers) {
+				if (this.numberSeats < this.numberPassengers + newPassengers)
+					alert('Passenger is more than number of seats!')
+				this.numberPassengers += newPassengers
+			}
+			dropPassengers(numPassengers) {
+				this.numberPassengers -= numPassengers
+			}
+		}
+
+		let auto1 = new Auto('VW', 70, 35, 7, 3)
+		console.log(auto1.toString())
+    </script>
+  </body>
+</html>

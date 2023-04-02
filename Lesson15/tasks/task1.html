@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 1</h3>
+    <p>
+		Створити об’єкт «Тир». У масиві зберігаються 1, якщо у цьому квадраті є заєць і 0 в іншому випадку. 
+		Метод пострілу (задається позиція пострілу).
+		Виведення ігрового поля.
+
+    </p>
+
+    <script>
+		function ShootingGallery(level) {
+			this.level = level
+			this.numberHares = this.level + 2
+			this.widthField = this.level + 2
+			this.heightField = this.level + 2
+			this.field = this.getField()
+		}
+
+		ShootingGallery.prototype.getRandomNumber = function(maxV) {
+			return Math.floor(Math.random() * (maxV + 1))
+		}
+
+		ShootingGallery.prototype.getField = function() {
+			let placesHares = []
+			let count = 0
+			while (count < this.numberHares) {
+				let number = this.getRandomNumber(this.widthField * this.heightField - 1)
+				if (!placesHares.includes(number)) {
+					placesHares.push(number)
+					count++
+				}				
+			}
+			
+			let field = []
+			for (let i = 0, k = 0; i < this.heightField; i++) {
+				let row = []
+				for (let j = 0; j < this.widthField; j++, k++) {
+					if (placesHares.includes(k)) row.push(1)
+					else row.push(0)
+				}
+				field.push(row)
+			}
+			return field
+		}
+
+		ShootingGallery.prototype.createShot = function() {			
+			const user_X = parseInt(prompt(`Введіть координату X, (1 - ${this.widthField})`))
+			const user_Y = parseInt(prompt(`Введіть координату Y, (1 - ${this.heightField})`))
+
+			if (this.field[user_Y - 1][user_X - 1] === 1) {
+				alert('Зайцю не повезло...')
+				this.level += 1
+				game = new ShootingGallery(this.level)
+				game.playGame()
+			} 
+			else alert('Промах.')			
+		}
+
+		ShootingGallery.prototype.printField = function() {
+			document.write(`<table border='1'>`)
+			for (let row of this.field) {
+				document.write(`<tr>`)
+				for (let el of row) {
+					document.write(`<td>${el}</td>`)
+				}
+				document.write(`</tr>`)
+			}
+			document.write(`</table>`)
+			return print			
+		}
+		
+		ShootingGallery.prototype.playGame = function() {
+			this.createShot()
+			this.printField()
+		}
+
+		let game = new ShootingGallery(1)
+		game.playGame()
+    </script>
+  </body>
+</html>
