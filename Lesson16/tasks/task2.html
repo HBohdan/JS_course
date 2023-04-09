@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 2</h3>
+    <p>
+      Створити клас TMoney для роботи з грошовими сумами. Сума повинна зберігатися у вигляді доларового еквіваленту. Реалізувати методи додавання/вилучення грошової маси, вказуючи необхідну суму у гривнях, та визначення курсу долара, при якому сума у гривнях збільшиться на 100. Курс долара зберігати в окремому полі. 
+    </p>
+
+    <script>
+		class TMoney {
+			static dollarRate = 38
+			#balanceDollar	
+
+			constructor(initBalance) {
+				this.BalanceDollar = initBalance / TMoney.dollarRate
+			}
+
+			get BalanceDollar() {
+				return this.#balanceDollar
+			}
+			set BalanceDollar(value) {
+				if (value < 0)
+					throw new Error ('Недостатньо коштів!')
+				this.#balanceDollar = value
+			}
+
+			addMoney(value) {
+				this.BalanceDollar += value / TMoney.dollarRate
+			}
+			takeMoney(value) {
+				this.BalanceDollar -= value / TMoney.dollarRate
+			}
+			getExchangeRateToIncreaseHryvniaBy_100() {
+				return (this.BalanceDollar * TMoney.dollarRate + 100) / this.BalanceDollar
+			}
+
+			toString() {
+				return `
+					Баланс = $${this.BalanceDollar.toFixed(2)} <br>
+					Курс долара, при якому сума у гривнях збільшиться на 100 грн = ${this.getExchangeRateToIncreaseHryvniaBy_100().toFixed(2)} грн
+				`
+			}
+		}
+
+		let balance = new TMoney(8000)
+		document.write(`${balance} <br>`)
+
+    </script>
+  </body>
+</html>

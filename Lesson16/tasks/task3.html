@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 3</h3>
+    <p>
+      Об’єкт “Фірма” (використати члени-класи).<br>
+		Поля(властивості):
+		<ul>
+			<li>назва фірми;</li>
+			<li>дата заснування (рік, місяць);</li>
+			<li>послуги (назва послуги, вартість, термін виконання);</li>
+			<li>адреси філіалів (країна, місто, вулиця, номер будинку);</li>
+		</ul>
+		Методи (дії):
+		<ul>
+			<li>визначення кількості років існування фірми;</li>
+			<li>виведення всіх філіалів фірми у вказаному місті;</li>
+			<li>виведення на екран послуг, що можуть бути виконані за вказану суму грошей та вказаний термін часу.</li>
+		</ul>
+    </p>
+
+    <script>
+		class Service {
+			constructor(initData) {
+				Object.assign(this, initData)
+			}
+			toString() {
+				return `<br>
+					<br> Назва послуги - ${this.title} <br>
+					Вартість послуги - ${this.cost} <br>
+					Термін виконання - ${this.deadline}
+				`
+			}
+		}
+
+		class Address {
+			constructor(initData) {
+				Object.assign(this, initData)
+			}
+
+			toString() {
+				return `<br> ${this.country}, м. ${this.city}, вул. ${this.street} ${this.number}`
+			}
+		}
+
+		class Company {
+			constructor(initData) {
+				Object.assign(this, initData)
+			}
+
+			getYearsOfExistenceFirm() {
+				return new Date().getFullYear() - this.creationDate.year
+			}
+			getBranchesOfCity(nameCity) {
+				let result = this.addressesOfBranches.filter(el => el.city === nameCity)
+				if (result.length === 0) result = `<br> В місті ${nameCity} послуги не надаються!`
+				return result
+			}
+			getServiceForSpecifiedMoneyAndTime(cost, deadline) {
+				let result = this.servicesList.filter(el => el.cost <= cost && el.deadline <= deadline)
+				if (result.length === 0) return `<br> Послуги за вказані ціну або час відсутні! Sorry(`
+				return result
+			}
+
+			toString() {
+				return `${this.title} ${this.creationDate} ${this.servicesList} ${this.addressesOfBranches}`
+			}
+		}
+		
+		let company1 = new Company({
+			title: 'Company_1',
+			creationDate: {year: 1980, month: 3},
+			servicesList: [
+				new Service({title: 'Service_1', cost: 10, deadline: 2}),
+				new Service({title: 'Service_2', cost: 20, deadline: 3}),
+				new Service({title: 'Service_3', cost: 20, deadline: 5}),
+				new Service({title: 'Service_4', cost: 30, deadline: 1}),
+				new Service({title: 'Service_5', cost: 50, deadline: 4}),
+			],
+			addressesOfBranches: [
+				new Address({country: 'Україна', city: 'Тернопіль', street: 'Шевченка',number: 5}),
+				new Address({country: 'Україна', city: 'Тернопіль', street: 'Острозького',number: 2}),
+				new Address({country: 'Україна', city: 'Тернопіль', street: 'Шептицького',number: 5}),
+				new Address({country: 'Україна', city: 'Львів', street: 'Бандери',number: 7})
+			]
+		})
+		
+		document.write(`${company1.getBranchesOfCity('Тернопіль')} <br>`)
+		document.write(company1.getServiceForSpecifiedMoneyAndTime(20, 5))
+
+    </script>
+  </body>
+</html>

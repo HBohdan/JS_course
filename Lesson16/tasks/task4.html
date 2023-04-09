@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 4</h3>
+    <p>
+      Створити клас TBankomat, який моделює роботу банкомата. Клас повинен містити поля для зберігання кількості купюр кожного із номіналів від 5 до 200 гривень. Реалізувати методи знаходження максимальної та мінімальної сум, які може видати банкомат, та метод зняття деякої суми.
+    </p>
+
+    <script>
+		class Banknota {
+			constructor({denomination, number}) {
+				this.denomination = denomination
+				this.number = number
+			}
+
+			toString() {
+				return `<br> Номінал - ${this.denomination}, ${this.number} шт.`
+			}
+		}
+
+		class TBankomat {
+			#maxAmountMoney
+			constructor(initData) {
+				Object.assign(this, initData)
+			}
+
+			getMinAmountMoney() {
+				for (const banknota of this.listOfBanknotes) {
+					if (banknota.number > 0) return banknota.denomination
+				}
+				return 0
+			}
+
+			getMaxAmountMoney() {
+				return this.listOfBanknotes.reduce((sum, banknote) => sum + banknote.denomination * banknote.number, 0)
+			}
+
+			giveMoney() {
+				let userMoney = parseInt(prompt(`Мінімальна сума = ${this.getMinAmountMoney()}, Максимальна сума = ${this.getMaxAmountMoney()}. Введіть суму кратну ${this.getMinAmountMoney()}`))
+
+				if (userMoney % this.getMinAmountMoney() !== 0 || userMoney > this.getMaxAmountMoney()) throw new Error ('Некоректна сума!')
+					
+				let result = ''
+				for (let i = this.listOfBanknotes.length - 1; i >= 0; i--) {
+					let count = 0
+					for (let k = 1; k <= this.listOfBanknotes[i].number; k++) {
+						let expression = userMoney / this.listOfBanknotes[i].denomination
+						if (expression >= 1) {
+							count++
+							userMoney -= this.listOfBanknotes[i].denomination
+						}
+					}
+					if (count === 0) continue
+					this.listOfBanknotes[i].number -= count
+					result += `номінал ${this.listOfBanknotes[i].denomination} - ${count} шт., <br>`				
+				}				
+				return result
+			}
+
+			toString() {
+				return `${this.listOfBanknotes}`
+			}
+		}
+
+		let bankomat = new TBankomat({
+			listOfBanknotes: [
+				new Banknota({denomination: 5, number: 2}),
+				new Banknota({denomination: 10, number: 3}),
+				new Banknota({denomination: 20, number: 0}),
+				new Banknota({denomination: 50, number: 5}),
+				new Banknota({denomination: 100, number: 0}),
+				new Banknota({denomination: 200, number: 3})
+			]
+		})
+
+		document.write(`Видача банкнот: <br> ${bankomat.giveMoney()}`)
+		
+    </script>
+  </body>
+</html>

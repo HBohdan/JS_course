@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 1</h3>
+    <p>
+		Створити клас TDate для роботи із датами у форматі “день.місяць.рік”. Дата представляється структурою із трьома полями. Реалізувати методи збільшення/зменшення дати на певну кількість днів, місяців чи років. Введення та виведення дати реалізувати за допомогою методу  toString.
+    </p>
+
+    <script>
+		class TDate {
+			#day
+			#month
+			#year
+			constructor(day, month, year) {
+				this.Year = year
+				this.Month = month
+				this.Day = day
+			}
+
+			get Day() {
+				return this.#day
+			}
+			get Month() {
+				return this.#month
+			}
+			get Year() {
+				return this.#year
+			}
+			
+			set Day(newDay) {
+				if (newDay < 1 || newDay > this.getNumberDaysInMonth())
+					throw new Error ('Incorrect day!')
+				this.#day = newDay
+			}
+			set Month(newMonth) {
+				if (newMonth < 1 || newMonth > 12)
+					throw new Error ('Incorrect month!')
+				this.#month = newMonth
+			}
+			set Year(newYear) {
+				if (newYear <= 0)
+					throw new Error ('Incorrect year!')
+				this.#year = newYear
+			}
+
+			isLeapYear() {
+				return this.Year % 4 === 0 && (this.Year % 100 !== 0 || this.Year % 400 === 0)
+			}
+			getNumberDaysInMonth() {
+				const listMonth_31 = [1, 3, 5, 7, 8, 10, 12]
+
+				if (listMonth_31.includes(this.Month)) return 31
+				if (this.Month === 2 && this.isLeapYear()) return 29
+				if (this.Month === 2) return 28
+				return 30
+			}
+			increaseDay(value) {
+				let totalDays = this.Day + value
+				while(totalDays > this.getNumberDaysInMonth()) {					
+					totalDays -= this.getNumberDaysInMonth()
+					this.increaseMonth(1)
+				}
+				this.Day = totalDays
+			}
+			decreaseDay(value) {
+				let totalDays = this.Day - value
+				while(totalDays < 1) {
+					this.decreaseMonth(1)
+					totalDays = this.getNumberDaysInMonth() + this.Day - value
+					value -= this.getNumberDaysInMonth()
+				}
+				this.Day = totalDays
+			}
+			increaseMonth(value) {
+				this.increaseYear(Math.floor((this.Month + value - 1) / 12))	
+				this.Month = ((this.Month + value - 1) % 12) + 1
+			}
+			decreaseMonth(value) {
+				this.decreaseYear(Math.floor((value - this.Month + 12) / 12))				
+      		this.Month = ((this.Month - (value % 12) + 11) % 12) + 1
+			}
+			increaseYear(value) {
+				this.Year += value
+			}
+			decreaseYear(value) {
+				this.Year -= value
+			}
+
+			toString() {
+				return `${this.Day}.${this.Month}.${this.Year}`
+			}
+		}
+
+		let date1 = new TDate(5, 3, 2023)
+		document.write(`${date1} <br>`)
+
+		date1.decreaseDay(64)
+		document.write(`${date1} <br>`)
+    </script>
+  </body>
+</html>
