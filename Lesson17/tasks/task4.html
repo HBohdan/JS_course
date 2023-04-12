@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 4</h3>
+    <p>
+      Склад. База товарів, які зберігаються на складі: назва товару, одиниця виміру, кількість, фірма виробник (назва, реєстраційний номер). Організувати реєстрацію/відвантаження товарів, фільтрація за назвою товару, фільтрація за назвою фірми.
+    </p>
+
+    <script>
+		class ManufacturerCompany {
+			static counter = 0
+			constructor(companyName) {
+				this.companyName = companyName
+				this.regNumber = ++ManufacturerCompany.counter
+			}
+			toString() {
+				return `${this.companyName}, реєстр. номер - ${this.regNumber}`
+			}
+		}
+
+		class Product {
+			#number
+			constructor(title, unit, number, producer) {
+				this.title = title
+				this.unit = unit
+				this.Number = number
+				this.producer = new ManufacturerCompany(producer)				
+			}
+
+			get Number() {
+				return this.#number
+			}
+			set Number(value) {
+				if (value < 0) 
+					throw new Error (`В наявності ${this.Number} ${this.unit}`)				
+				this.#number = value
+			}
+
+			increaseNumber(value) {
+				this.Number += value
+			}
+
+			decreaseNumber(value) {
+				this.Number -= value
+			}
+
+			toString() {
+				return `<br> ${this.title}, ${this.Number} ${this.unit}., ${this.producer}`
+			}
+		}
+		
+		class BaseProducts {
+			static objectBaseProducts
+			constructor() {
+				if (BaseProducts.objectBaseProducts) return BaseProducts.objectBaseProducts
+				this.listProducts = []
+
+				BaseProducts.objectBaseProducts = this
+			}
+
+			isProduct(title, producer) {
+				if (this.listProducts.length) return this.listProducts.find(product => 
+				product.title === title && product.producer.companyName === producer)
+				return false
+			}
+
+			registrationProduct(newProduct) {
+				let product = this.isProduct(newProduct.title, newProduct.producer.companyName)
+			
+				if (product) product.increaseNumber(newProduct.Number)
+				else this.listProducts.push(newProduct)
+			}
+
+			shipmentProduct(title, number, producer) {
+				let product = this.isProduct(title, producer)
+				
+				if (product) product.decreaseNumber(number)
+				else throw new Error ('Товару немає в наявності!')
+			}
+
+			searchByTitleProduct(title) {
+				let productList = this.listProducts.filter(product => product.title === title)
+				return productList.length ? productList : 'Товару немає в наявності!'
+			}
+
+			searchByManufacturerName(name) {
+				let productList = this.listProducts.filter(product => product.producer.companyName === name)
+				return productList.length ? productList : 'Товару немає в наявності!'
+			}
+
+			toString() {
+				return `${this.listProducts}`
+			}
+
+		}
+		
+		let baseProducts = new BaseProducts()
+
+		baseProducts.registrationProduct(new Product('Помідори', 'кг', 20, 'Херсон'))
+		baseProducts.registrationProduct(new Product('Цибуля', 'кг', 15, 'Херсон'))		
+		baseProducts.registrationProduct(new Product('Помідори', 'кг', 30, 'Заліщики'))
+		baseProducts.registrationProduct(new Product('Огірки', 'кг', 30, 'Заліщики'))
+		baseProducts.registrationProduct(new Product('Помідори', 'кг', 10, 'Херсон'))
+
+		baseProducts.shipmentProduct('Помідори', 8, 'Заліщики')
+
+		console.log(baseProducts.searchByTitleProduct('Помідори'))
+		console.log(baseProducts.searchByManufacturerName('Херсо'))
+
+		document.write(`${baseProducts} <br>`)
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+
+	<body>
+		<h3>Завдання 5</h3>
+		<p>
+		Особиста бібліотека. Картотека домашньої бібліотеки: дані книги (автори (піб, рік народження, короткий опис), назва книги, жанр, видавництво (назва, реєстраційний номер, рік засування)). Реалізувати розділи бібліотеки (спеціальна література, хобі, домашнє господарство і т.д.), походження книги і наявність на даний час. Організувати додавання/вилучення книг та  вибір книг за назвою, за ПІБ автора, за видавництвом.
+		</p>
+
+		<script>
+		class Author {
+			constructor(initData) {
+				Object.assign(this, initData)
+			}
+			toString() {
+				return `<br>${this.name}, ${this.birthYear}, ${this.description}`
+			}
+		}
+
+		class Publishing {
+			constructor(initData) {
+				Object.assign(this, initData)
+			}
+			toString() {
+				return `${this.companyName}, ${this.regNumber}, ${this.yearPublication}`
+			}
+		}		
+
+		class LibrarySection {
+			constructor(initData) {
+				Object.assign(this, initData)
+				this.listLibrarySection = {}
+			}
+			toString() {
+				return `${this.title}`
+			}
+		}
+
+		class Book {
+			static counter = 0
+			constructor(initData) {
+				Object.assign(this, initData)
+				this.regNumber = ++Book.counter
+			}
+
+			toString() {
+				return `<br><br>
+					lib.num-${this.regNumber},
+					${this.author}, <br>
+					${this.title}, <br>
+					${this.genre}, <br>
+					${this.publishing}, <br>
+					${this.librarySection}, <br>
+					${this.origin}, <br>
+					${this.available}
+				`
+			}
+		}
+
+		class Library {
+			static objectLibrary
+			
+			constructor() {
+				if (Library.objectLibrary) return Library.objectLibrary
+				this.listBooks = []
+				Library.objectLibrary = this
+			}
+
+			addBook(newBook) {
+				this.listBooks.push(newBook)
+			}
+			removeBook(libNumber) {
+				this.listBooks = this.listBooks.filter(book => book.regNumber !== libNumber)
+			}
+			borrowBook(libNumber, whoBorrows) {
+				let book = this.listBooks.find(book => book.regNumber === libNumber)
+				book.available = `немає в наявності, позичив ${whoBorrows}`
+			}
+			searchByTitleBook(title) {
+				let bookList = this.listBooks.filter(book => book.title === title)
+				return bookList.length ? bookList : 'Книги за вказаною назвою немає в бібліотеці!'
+			}
+			searchByAuthorName(searchName) {
+				let bookList = []				
+				for (const book of this.listBooks) {
+					for(const author of book.author) {
+						if (author.name === searchName) bookList.push(book)
+					}
+				}
+				return bookList.length ? bookList : 'Книги за вказаним автором немає в бібліотеці!'
+			}
+			searchByPublisherName(searchName) {
+				let bookList = this.listBooks.filter(book => book.publishing.companyName === searchName)
+				return bookList.length ? bookList : 'Книги за вказаним видавництвом немає в бібліотеці!'
+			}
+
+			toString() {
+				return `${this.listBooks}`
+			}
+		}
+
+		let library = new Library()		
+
+		library.addBook(new Book({
+			author: [new Author({name: 'Nick Morgan', birthYear: 1953, description: 'Американський мотиваційний спікер, коуч, професор і автор книг.'})],
+			title: 'Java Script для дітей',
+			genre: 'Програмування',
+			publishing: new Publishing({
+				companyName: 'Видавництво Старого Лева',
+				regNumber: 'ISBN 9781593274085',
+				yearPublication: 2018
+			}),
+			librarySection: new LibrarySection({title: 'Програмування'}),
+			origin: 'Куплена',
+			available: 'в наявності'
+		}))
+
+		library.addBook(new Book({
+			author: [new Author({name: 'Nick Morgan', birthYear: 1953, description: 'Американський мотиваційний спікер, коуч, професор і автор книг.'})],
+			title: 'Java Script для дітей',
+			genre: 'Програмування',
+			publishing: new Publishing({
+				companyName: 'Видавництво Старого Лева',
+				regNumber: 'ISBN 9781593274085',
+				yearPublication: 2018
+			}),
+			librarySection: new LibrarySection({title: 'Програмування'}),
+			origin: 'Куплена',
+			available: 'в наявності'
+		}))
+
+		library.addBook(new Book({
+			author: [
+				new Author({name: 'Eric Freeman', birthYear: 1965, description: 'Комп’ютерний науковець, автор книг'}),
+				new Author({name: 'Elisabeth Robson', birthYear: 1975, description: 'Програмістка, письменниця і викладачка'})				
+			],
+			title: 'Head First. JavaScript programming',
+			genre: 'Програмування',
+			publishing: new Publishing({
+				companyName: 'O\'REILLY',
+				regNumber: 'ISBN 9781449340131',
+				yearPublication: 2014
+			}),
+			librarySection: new LibrarySection({title: 'Програмування'}),
+			origin: 'Подарок',
+			available: 'в наявності'
+		}))
+
+		library.addBook(new Book({
+			author: [new Author({name: 'Eric Matthes', birthYear: 1972, description: 'Викладач природничих наук, математики та програмування в одній із старших шкіл Аляски.'})],
+			title: 'Пришвидшений курс PYTHON',
+			genre: 'Програмування',
+			publishing: new Publishing({
+				companyName: 'Видавництво Старого Лева',
+				regNumber: 'ISBN 9781593279288',
+				yearPublication: 2022
+			}),
+			librarySection: new LibrarySection({title: 'Програмування'}),
+			origin: 'Куплена',
+			available: 'в наявності'
+		}))
+
+		library.addBook(new Book({
+			author: [new Author({name: 'Марк Аврелій', birthYear: 121, description: '16-й імператор Риму, філософ-стоїк'})],
+			title: 'Наодинці з собою',
+			genre: 'Філософія',
+			publishing: new Publishing({
+				companyName: 'Видавництво "Апріорі"',
+				regNumber: 'ISBN 9786176297536',
+				yearPublication: 2018
+			}),
+			librarySection: new LibrarySection({title: 'Історія'}),
+			origin: 'Подарок',
+			available: 'в наявності'
+		}))
+
+		
+		library.borrowBook(2, 'сусід Петро 12.04.23')
+		// library.removeBook(2)
+
+		// console.log(library.searchByTitleBook('Java Script для дітей'))
+		// console.log(library.searchByAuthorName('Elisabeth Robson'))
+		console.log(library.searchByPublisherName('Видавництво "Апріорі"'))
+
+
+		console.log(library.listBooks)
+		document.write(`${library}`)
+
+		</script>
+	</body>
+</html>

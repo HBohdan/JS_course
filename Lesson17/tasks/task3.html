@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h3>Завдання 3</h3>
+    <p>
+      Створити клас Нагадувач. Кожні вказані кількості секунд (використати setInterval) програма нагадує про якусь подію (це просто текст) і також виводиться порядковий номер скільки раз вже нагадування було. Зробити так, щоб неможна було зробити одночасно декілька об’єктів-нагадувачів. Методи зупинки таймера, метод зміни повідомлення без зупинки таймера.
+    </p>
+
+    <script>
+		class Pomodoro {
+			static objectPomodoro
+			
+			constructor(interval, text) {
+				if (Pomodoro.objectPomodoro) return Pomodoro.objectPomodoro
+				this.interval = interval
+				this.text = text
+				this.count = 0
+				this.timerId
+				Pomodoro.objectPomodoro = this
+			}
+
+			start(stop) {
+				this.timerId = setInterval(() => {
+					this.count++
+					document.write(`Нагадування ${this.count}. ${this.text} <br>`)
+
+					if (this.count === 3) this.changeMessage()
+					if (stop === this.count) this.stop()
+				}, this.interval * 1000)
+				
+			}
+			changeMessage() {
+				let userMessage = prompt('Пвідомлення для нагадування: ')
+				this.text = userMessage
+			}
+			stop() {
+				clearInterval(this.timerId)
+				document.write('Таймер зупинено.')
+			}
+		}
+
+		let pomodoro = new Pomodoro(3, 'Зарядка!!!')
+		pomodoro.start(10)
+		
+    </script>
+  </body>
+</html>

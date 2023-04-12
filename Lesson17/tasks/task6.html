@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+
+	<body>
+		<h3>Завдання 5</h3>
+		<p>
+			Дано два класи MultChecker (клас для перевірки таблиці множення - рандомно генеруються числа, які треба перемножати), AddChecker (клас для перевірки додавання - рандомно генеруються числа у заданому діапазоні, які треба додавати). Обидва класи надсилають результати тестування об'єкту класу History, який зберігає історію тестування у масиві у вигляді об'єктів. <br>
+			Приклад. <br>
+			testsList= [<br>
+				&nbsp;{firstNum:1, secondNum:5,opration:’*’, userAnswer:7, correctAnswer:5},<br>
+				&nbsp;{firstNum:3, secondNum:4,opration:’+’, userAnswer:7, correctAnswer:7},<br>
+			]<br>
+			Можна створити окремий клас TestData, який описує один такий тест і у якому будуть ці поля. 
+			Розробити клас TestManager, який використовуючи ці класи за допомогою таймера періодично генерує якісь N задач (рандомно вибираємо, що опитувати: додавання чи множення) і проводить опитування. Результати тестування додаються в об’єкт History.  Зробити так, щоб об'єкт такого класу можна було створити тільки один. Коли зроблено ці N задач вивести усю історію на екран.
+		</p>
+
+		<div class="history"></div>
+
+		<script>
+			let divHistory = document.querySelector('.history')
+
+			function getRandomNumber(minV, maxV) {
+				return minV + Math.floor(Math.random() * (maxV - minV + 1))
+			}
+
+			class MultChecker {
+				constructor(minV, maxV) {
+					this.minV = minV
+					this.maxV = maxV
+				}
+
+				run() {
+					this.firstNum = getRandomNumber(this.minV, this.maxV)
+					this.secondNum = getRandomNumber(this.minV, this.maxV)
+					this.operation = '*'
+					this.userAnswer = parseInt(prompt(`${this.firstNum} * ${this.secondNum} = ?`))
+					this.correctAnswer = this.firstNum * this.secondNum
+				}
+				toString() {
+					return `${this.correctAnswer}`
+				}
+			}
+
+			class AddChecker {
+				constructor(minV, maxV) {
+					this.minV = minV
+					this.maxV = maxV
+				}
+
+				run() {
+					this.firstNum = getRandomNumber(this.minV, this.maxV)
+					this.secondNum = getRandomNumber(this.minV, this.maxV)
+					this.operation = '+'
+					this.userAnswer = parseInt(prompt(`${this.firstNum} + ${this.secondNum} = ?`))
+					this.correctAnswer = this.firstNum + this.secondNum
+				}
+			}
+
+			class TestData {
+				constructor(initData) {
+				Object.assign(this, initData)
+				}
+
+				toString() {
+					return `<br>
+						firstNum:${this.firstNum},
+						secondNum:${this.secondNum},
+						operation:'${this.operation}',
+						userAnswer:${this.userAnswer},
+						correctAnswer:${this.correctAnswer}
+					`
+				}
+
+			}
+
+			class History {
+				static objectHistory
+				static testsList = []
+				constructor() {
+					if (History.objectHistory) return History.objectHistory
+					History.objectHistory = this
+				}
+
+				static addResultTask(obj) {
+					this.testsList.push(obj)
+				}
+
+				toString() {
+					return `${History.testsList}`
+				}				
+			}
+
+			class TestManager {
+				constructor(N, interval, minV, maxV) {
+					this.taskNumber = N
+					this.interval = interval
+					this.minV = minV
+					this.maxV = maxV
+				}
+
+				runTest() {
+					let timerId = setInterval(() => {
+						let typeTest = getRandomNumber(0, 1)
+						let currentExample				
+						if (this.taskNumber === 0) {
+							divHistory.innerHTML = history
+							clearInterval(timerId)
+						} else {
+							if (typeTest) currentExample = new MultChecker(this.minV, this.maxV)
+							else currentExample = new AddChecker(this.minV, this.maxV)
+							currentExample.run()
+							let testData = new TestData(currentExample)
+							History.addResultTask(testData)
+						}
+						this.taskNumber--										
+					}, this.interval * 1000)
+				}
+			}
+
+			let history = new History()
+			let test = new TestManager(3, 3, 1, 10)
+			test.runTest()
+
+		</script>
+	</body>
+</html>
