@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
+
+	<body>
+		<h3>Завдання 5</h3>
+		<p>
+			Подорож складається з 3 етапів. На кожному етапі користувач може вибрати один з видів транспорту (авто, автобус, літак - випадаючий список), харчування (сніданок, обід, вечеря – checkbоx) та одного з 3-х гідів(використати  - radio buttons). Ціни визначте самі. Підрахувати загальну вартість.
+		</p>
+
+		<div class="task6">
+			<h3>Вид транспорту</h3>
+			<label>
+				<select id="typeTransport">
+					<option value="100">автобус</option>
+					<option value="200">авто</option>
+					<option value="300">літак</option>
+				</select>
+			</label>
+			<hr>
+			<div class="food">
+				<h3>Харчування</h3>
+				<label>
+					Сніданок
+					<input type="checkbox" value="50">
+				</label>
+				<label>
+					Обід
+					<input type="checkbox" value="70">
+				</label>
+				<label>
+					Вечеря
+					<input type="checkbox" value="90">
+				</label>
+			</div>
+			<hr>
+			<fieldset>
+				<legend>Гіди:</legend>
+
+				<div>
+					<input type="radio" id="guide1" name="guide" value="20"
+							checked>
+					<label for="guide1">Іван</label>
+				</div>
+
+				<div>
+					<input type="radio" id="guide2" name="guide"  value="30">
+					<label for="guide2">Петро</label>
+				</div>
+
+				<div>
+					<input type="radio" id="guide3" name="guide" value="40">
+					<label for="guide3">Степан</label>
+				</div>
+			</fieldset>
+			<hr>
+			<button class="getTotalPrice">get total price</button>
+			<p>Загальна вартість подорожі - <span class="price"></span></p>
+			
+		</div>
+		<script>
+			function getTotalPrice() {
+				const priceTransport = parseFloat(document.querySelector('#typeTransport').value)
+				const inputList = document.querySelectorAll('input')
+				const price = document.querySelector('.price')
+				let resultTotalPrice = 0
+				resultTotalPrice += priceTransport
+				for (const input of inputList) {
+					if (input.checked) resultTotalPrice += parseFloat(input.value)
+				}
+				price.innerHTML = resultTotalPrice
+			}
+			
+			document.querySelector('.getTotalPrice').onclick = getTotalPrice
+		</script>
+	</body>
+</html>

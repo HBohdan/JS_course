@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+	 <script>
+		function getYears() {
+			const userYearBirth = parseFloat(document.querySelector('input').value)
+			const currentYear = new Date().getFullYear()
+			
+			document.querySelector('body').append(`Ваш вік ${currentYear - userYearBirth} р.`)
+		}
+
+		window.onload = () => {
+			document.querySelector('input').onchange = getYears
+		}
+    </script>
+  </head>
+
+  <body>
+    <h3>Завдання 3</h3>
+    <p>
+      Користувач задає рік народження. Визначити кількість років користувача.
+    </p>
+
+	 <label>
+		Ваш рік народження?
+		<input type="text" placeholder="0">
+	 </label>
+	 <br>
+    
+  </body>
+</html>

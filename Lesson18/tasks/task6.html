@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
+
+	<body>
+		<h3>Завдання 5</h3>
+		<p>
+			Користувач задає кількість оцінок і натискає на кнопку «get table». В результаті формується таблиця з input, куди користувач вводить оцінки. Після цього натискає на кнопку “get sum” і знаходить середнє значення.
+		</p>
+
+		<div class="task5">
+			<label>
+				Price number
+				<input class="priceNumber" type="text" placeholder="0">
+			</label>
+			<br>
+			<button class="getTable">get table</button>
+			<hr>
+		</div>
+		<script>
+			function createTableInput() {
+				const divParent = document.querySelector('.task5')
+				const priceNumber = parseFloat(document.querySelector('.priceNumber').value)
+				const table = document.createElement('table')
+				table.classList.add('table')
+				table.style.cssText = 'border: 2px solid black;'
+				for (let i = 0; i < priceNumber; i++) {
+					let tr = document.createElement('tr')
+					table.append(tr)
+					let input = document.createElement('input')
+					input.setAttribute('placeholder', 0)
+					tr.append(input)
+				}
+				divParent.append(table)
+				const button = document.createElement('button')
+				button.style.cssText = 'margin: 5px 0 5px 0'
+				button.innerHTML = 'get average value'
+				button.classList.add('averageValue')
+				button.setAttribute('onclick', 'getAvarageValue()')
+				divParent.append(button)
+			}
+
+			function getAvarageValue() {
+				const divParent = document.querySelector('.task5')
+				const table = document.querySelectorAll('.table input')
+				let result = 0
+				for (const input of table) {
+					result += parseFloat(input.value)
+				}
+
+				const p = document.createElement('p')
+				p.innerHTML = `sum = ${(result / table.length).toFixed(1)}`
+				divParent.append(p)
+			}
+
+			window.onload = () => {
+				document.querySelector('.getTable').onclick = createTableInput
+			}
+		</script>
+	</body>
+</html>

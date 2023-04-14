@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+	 <link rel="stylesheet" href="style.css">
+	 <script>	
+	 	function getDate() {
+			const firstNum = parseFloat(document.querySelector('.first').value)
+			const secondNum = parseFloat(document.querySelector('.second').value)
+			return [firstNum, secondNum]
+		}
+
+		const sum = () => document.querySelector('.result').value = getDate()[0] + getDate()[1]
+		const difference = () => document.querySelector('.result').value = getDate()[0] - getDate()[1]
+		const product = () => document.querySelector('.result').value = getDate()[0] * getDate()[1]
+		const fraction = () => document.querySelector('.result').value = getDate()[0] / getDate()[1]
+
+		window.onload = function () {			
+			document.querySelector('.addition').onclick = sum
+			document.querySelector('.subtraction').onclick = difference
+			document.querySelector('.multiplication').onclick = product
+			document.querySelector('.division').onclick = fraction
+		}
+				
+    </script>
+  </head>
+
+  <body>
+    <h3>Завдання 1</h3>
+    <p>
+		Розробити калькулятор.
+    </p>
+	 <div class="task1">
+		<label>
+			First number
+			<input class="first" type="text" placeholder="0">
+		</label><br>
+		<label>
+			Second number
+			<input class="second" type="text" placeholder="0">
+		</label><br>
+
+		<button class="addition">Додати</button>
+		<button class="subtraction">Відняти</button>
+		<button class="multiplication">Помножити</button>
+		<button class="division">Поділити</button>
+		<br>
+		<hr>
+
+		<label>
+			Результат
+			<input class="result" type="text" placeholder="0">
+		</label>
+	 </div>     
+  </body>
+</html>
