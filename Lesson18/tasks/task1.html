@@ -7,22 +7,33 @@
     <title>Document</title>
 	 <link rel="stylesheet" href="style.css">
 	 <script>	
-	 	function getDate() {
+	 	function action() {
 			const firstNum = parseFloat(document.querySelector('.first').value)
 			const secondNum = parseFloat(document.querySelector('.second').value)
-			return [firstNum, secondNum]
+			let result
+			switch (this.value) {
+				case '+':
+					result = firstNum + secondNum
+					break;
+				case '-':
+					result = firstNum - secondNum
+					break;
+				case '*':
+					result = firstNum * secondNum
+					break;
+				case '/':
+					result = firstNum / secondNum
+					break;
+			}
+
+			document.querySelector('.result').value = result
 		}
 
-		const sum = () => document.querySelector('.result').value = getDate()[0] + getDate()[1]
-		const difference = () => document.querySelector('.result').value = getDate()[0] - getDate()[1]
-		const product = () => document.querySelector('.result').value = getDate()[0] * getDate()[1]
-		const fraction = () => document.querySelector('.result').value = getDate()[0] / getDate()[1]
-
-		window.onload = function () {			
-			document.querySelector('.addition').onclick = sum
-			document.querySelector('.subtraction').onclick = difference
-			document.querySelector('.multiplication').onclick = product
-			document.querySelector('.division').onclick = fraction
+		window.onload = function () {
+			document.querySelector('.addition').onclick = action
+			document.querySelector('.subtraction').onclick = action
+			document.querySelector('.multiplication').onclick = action
+			document.querySelector('.division').onclick = action
 		}
 				
     </script>
@@ -43,10 +54,10 @@
 			<input class="second" type="text" placeholder="0">
 		</label><br>
 
-		<button class="addition">Додати</button>
-		<button class="subtraction">Відняти</button>
-		<button class="multiplication">Помножити</button>
-		<button class="division">Поділити</button>
+		<button class="addition" value="+">Додати</button>
+		<button class="subtraction" value="-">Відняти</button>
+		<button class="multiplication" value="*">Помножити</button>
+		<button class="division" value="/">Поділити</button>
 		<br>
 		<hr>
 
