@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			.buttle {
+				width: 500px;
+				height: 300px;
+				background: green;
+				margin: 0 auto;
+				overflow: hidden;
+				position: relative;
+			}
+			.tank {
+				width: 40px;
+				height: 40px;
+				background: url(img/tank.png) 0 0/100% 100% no-repeat;
+				position: absolute;
+			}
+			.boom {
+				width: 200px;
+				height: 200px;
+				background: url(img/boom.gif);
+				position: absolute;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h3>Завдання 5</h3>
+		<p>
+			Байрактар. З верхньої частини екрану у випадковій позиції по горизонталі з’являються танки, які їдуть вниз. При кліку на танк він вибухає і зникає з екрану.
+		</p>
+		<div class="buttle">
+			
+		</div>
+
+		<script>
+			class Tank {
+				constructor(tankNumber) {
+					this.tankNumber = tankNumber
+				}
+				getRandomNumber(minV, maxV) {
+				return minV + Math.floor(Math.random() * (maxV - minV + 1))
+				}
+				boom(tank) {
+					tank.className = 'boom'
+					tank.style.left = parseInt(tank.style.left) - 15 + '%'
+					tank.style.top = parseInt(tank.style.top) - 80 + 'px'
+					
+					setTimeout(() => {
+						tank.remove()
+					}, 1000)
+
+				}
+				move(tank) {					
+					const heightField = document.querySelector('.buttle').clientHeight
+					let timerID = setInterval(() => {
+						tank.style.top = tank.offsetTop + 1 + 'px'
+
+						if (parseInt(tank.style.top) > heightField) {
+							tank.remove()
+							clearInterval(timerID)
+						}
+					}, 50)
+				}
+				createTank() {
+					const tank = document.createElement('div')
+					tank.className = 'tank'					
+					tank.style.cssText = `
+						left: ${this.getRandomNumber(1, 92)}%;
+						top: -40px;
+					`
+					tank.onclick = this.boom.bind(this, tank)
+					this.move(tank)
+					return tank
+				}
+				render(container) {
+					const targetContainer = document.querySelector(container)
+					let timerID = setInterval(() => {
+						targetContainer.append(this.createTank())
+						this.tankNumber--
+						if (this.tankNumber === 0) clearInterval(timerID)
+					}, 3000)
+				}
+			}
+			const buttle = new Tank(5)
+			buttle.render('.buttle')
+
+		</script>
+	</body>
+</html>

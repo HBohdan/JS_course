@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+	 <style>
+		.cards {
+			display: flex;
+		}
+		.card-container {
+			display: block;
+			width: 150px;
+			border: 2px solid #F6F6F6;
+			padding: 5px;
+			text-decoration: none;
+		}
+		.card-container:hover {
+			border: 3px solid #22B14C;
+		}
+		.card-container img {
+			height: 80px;
+			display: block;
+			margin: 0 auto;
+		}
+		.rating {
+			width: max-content;
+			height: 19px;
+			padding: 5px;
+			text-transform: uppercase;
+			border-radius: 10px;
+			margin-bottom: 10px;
+			color: white;
+		}
+		.topSale {
+			background: #FFA900;
+		}
+		.saleAction {
+			background: red;
+		}
+		.title {
+			color: black;
+			/* width: 100px; */
+		}
+		.price {
+			color: red;
+		}
+	 </style>
+	 
+  	</head>
+
+	<body>
+		<h3>Завдання 1</h3>
+		<p>
+			Відображаємо картки товарів, які користувач може вибирати. Вибраний товар має зелену рамку.
+		</p>
+		<div class="cards"></div>
+
+		<script>	
+			class LinkCard {
+				constructor(initData) {
+					Object.assign(this, initData)
+				}
+
+				getRating() {
+					let ratingClassName = 'rating'
+					switch (this.rating) {
+						case 'топ продаж':
+							ratingClassName = 'rating topSale'
+							break;
+						case 'акція':
+							ratingClassName = 'rating saleAction'
+							break;					
+						default:
+							break;
+					}
+					return ratingClassName
+				}
+
+				render(containerSelector) {
+					const cardContainer = document.createElement('a')
+					cardContainer.className = 'card-container'
+					cardContainer.href = this.link
+
+					const rating = document.createElement('div')
+					rating.className = this.getRating()
+					rating.innerHTML= this.rating
+					cardContainer.append(rating)
+
+					const img = document.createElement('img')
+					img.src = this.imgSrc
+					cardContainer.append(img)
+
+					const title = document.createElement('p')
+					title.className = 'title'
+					title.innerHTML = this.title
+					cardContainer.append(title)
+
+					const price = document.createElement('p')
+					price.className = 'price'
+					price.innerHTML = `${this.price} ₴`
+					cardContainer.append(price)
+
+					document.querySelector(containerSelector).append(cardContainer)
+				}
+			}
+			const linksSet = [
+			{
+				imgSrc: 'img/nout1.webp',
+				title: 'Ноутбук Acer',
+				link: 'https://rozetka.com.ua/acer_nh_qbfeu_00c/p288376303/',
+				price: 30999,
+				rating: 'топ продаж'
+			},
+			{
+				imgSrc: 'img/nout2.webp',
+				title: 'Ноутбук Lenovo',
+				link: 'https://rozetka.com.ua/lenovo-82hl00hcra/p352335126/',
+				price: 16999,
+				rating: ''
+			},
+			{
+				imgSrc: 'img/nout3.webp',
+				title: 'Ноутбук Asus',
+				link: 'https://rozetka.com.ua/asus-90nr03u2-m008e0/p353689830/',
+				price: 29999,
+				rating: 'акція'
+			}
+		]
+
+		for (const linkData of linksSet) {
+			new LinkCard(linkData).render('.cards')
+		}
+
+		</script>    
+	</body>
+</html>

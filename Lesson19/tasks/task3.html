@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+	 <style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		.snow {
+			position: relative;
+			background: #000132;
+			color: white;
+			overflow-y: hidden;
+		}
+		.snowflake {
+			position: absolute;
+			left: 50%;
+		}
+	 </style>
+  </head>
+
+  <body>
+    <!-- <h3>Завдання 3</h3>
+    <p>
+      Відобразити падаючий сніг. Сніжинка з’являється у верхній частині екрану і з випадковою швидкістю рухається вниз. Як тільки сніжинка досягає нижньої частини екрану вона знову повинна з’явитись у верхній частині екрану.
+    </p> -->
+	 <!-- <div class="snowflake">*</div> -->
+	 <div class="snow"></div>
+	 <script>
+		class Snowflake {
+			constructor(number) {
+				this.number = number
+			}
+			getRandomNumber(minV, maxV) {
+				return minV + Math.floor(Math.random() * (maxV - minV + 1))
+			}
+			createSnowflake() {
+				const fontSize = this.getRandomNumber(10, 40)
+				let speed = 30
+				if (fontSize < 20) {
+					speed = 50
+				} else if (fontSize < 30) {
+					speed = 40
+				}
+				const snowflake = document.createElement('div')
+				snowflake.className = 'snowflake'
+				snowflake.innerHTML = '*'
+				snowflake.style.cssText = `
+					left: ${this.getRandomNumber(1, 100)}%;
+					font-size: ${fontSize}px;
+				`
+
+				let timerID = setInterval(() => {
+					if (parseFloat(snowflake.style.top) > document.documentElement.clientHeight) {
+						snowflake.style.top = '0'
+					} else {
+						snowflake.style.top = snowflake.offsetTop + 1 + 'px'
+					}
+				}, speed)
+
+				return snowflake
+			}
+			render(containerSelector) {
+				const snowContainer = document.querySelector(containerSelector)
+				snowContainer.style.height = document.documentElement.clientHeight + 'px'
+
+				let timerID = setInterval(() => {
+					snowContainer.append(this.createSnowflake())
+					this.number--
+					if (this.number === 0) clearInterval(timerID)
+				}, 1000)
+			}
+		}
+
+		let snow = new Snowflake(50)
+		snow.render('.snow')
+		
+    </script>
+  </body>
+</html>

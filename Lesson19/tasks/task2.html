@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+	 <link rel="stylesheet" href="style.css">
+	 <style>
+		* {
+			box-sizing: border-box;
+		}
+		.container {
+			display: flex;
+			column-gap: 20px;
+		}
+		h4{
+			text-align: center;
+		}
+		ul {
+			width: 170px;
+			border: 2px solid black;
+			padding: 2px;
+		}
+		li {
+			list-style-type: none;
+			border: 1px solid black;
+			padding: 3px;
+			margin-bottom: 2px;
+			position: relative;
+		}
+		
+		li:last-child {
+			margin-bottom: 0px;
+		}
+		button {
+			width: 22px;
+			height: 16px;
+			border: none;
+			position: absolute;
+			top: 4px;
+    		right: 5px;
+			cursor: pointer;
+		}
+		.rightArrow {
+			background: url(img/right.png) 0 0/100% 100% no-repeat;
+		}
+		.leftArrow {
+			background: url(img/left.png) 0 0/100% 100% no-repeat;
+		}
+	 </style>
+	 
+  </head>
+
+  <body>
+    <h3>Завдання 2</h3>
+    <p>
+      Дано список спортсменів. Потрібно сформувати список тих, які будуть брати участь у змаганні. При цьому є два стовпці. В одному відображені всі спортсмени, в іншому – список тих, хто був вибраний. При натисканні на зелену стрілку спортсмен переміщається у список для змагань. При натисканні на червону стрілку спортсмен переміщається у загальний список.
+    </p>
+
+    <div class="container">
+
+	 </div> 
+	 <script>
+		class AthletesForCompetition {
+			constructor(list) {
+				this.generalListAthletes = list
+			}
+			addElementToCompetitionList(elem, elemButton) {
+				elemButton.className = 'leftArrow'
+				elemButton.onclick = this.addElementToGeneralList.bind(this, elem, elemButton)
+				document.querySelector('.competitionContainer ul').append(elem)
+			}
+			addElementToGeneralList(elem, elemButton) {
+				elemButton.className = 'rightArrow'
+				elemButton.onclick = this.addElementToCompetitionList.bind(this, elem, elemButton)
+				document.querySelector('.generalContainer ul').append(elem)
+			}
+			
+			renderGeneralList() {
+				const generalListContainer = document.createElement('div')
+				generalListContainer.className = 'generalContainer'
+				const title = document.createElement('h4')
+				title.innerHTML = 'Загальний список'
+				generalListContainer.append(title)
+
+				const generalList = document.createElement('ul')
+				for (const el of this.generalListAthletes) {
+					const li = document.createElement('li')
+					li.innerHTML = el
+					const button = document.createElement('button')
+					button.className = 'rightArrow'
+					button.onclick = this.addElementToCompetitionList.bind(this, li, button)
+					li.append(button)
+					generalList.append(li)
+				}
+				generalListContainer.append(generalList)
+				
+				return generalListContainer
+			}
+			renderTableForCompetition() {
+				const listForCompetitionContainer = document.createElement('div')
+				listForCompetitionContainer.className = 'competitionContainer'
+				const title = document.createElement('h4')
+				title.innerHTML = 'Обрані для змагання'
+				listForCompetitionContainer.append(title)
+
+				const competitionList = document.createElement('ul')
+				competitionList.style.height = `${document.querySelector('.generalContainer ul').offsetHeight}px`
+				listForCompetitionContainer.append(competitionList)
+
+				return listForCompetitionContainer
+			}
+			render(containerSelector) {
+				const targetContainer = document.querySelector(containerSelector)
+				targetContainer.append(this.renderGeneralList())
+				const heightUl = `${document.querySelector('.generalContainer ul').offsetHeight}px`
+				document.querySelector('.generalContainer ul').style.height = heightUl
+
+				targetContainer.append(this.renderTableForCompetition())
+			}
+		}
+		const listAthletes = ['John Depp', 'Sara Wik', 'Den Miro', 'Alan Woo', 'Olga Sich', 'Ivan Hal', 'сусід Іван']
+
+		const list = new AthletesForCompetition(listAthletes)
+		list.render('.container')
+
+    </script>
+  </body>
+</html>

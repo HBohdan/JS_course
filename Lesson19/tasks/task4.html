@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+	 <style>
+		* {
+			box-sizing: border-box;
+		}
+		.sky {
+			height: 400px;
+			width: 400px;
+			background: black;
+			margin: 0 auto;
+			position: relative;
+		}
+		.star {
+			color: #FFDD00;
+			position: absolute;
+		}
+	 </style>
+  </head>
+
+  <body>
+    <h3>Завдання 4</h3>
+    <p>
+       Сяючі зорі. Вказана кількість зірочок повинна з’являтися у випадковій частині екрану. Кожна зірка з певним кроком і інтервалом збільшується від мінімального до максимального розміру. Як тільки досягнути максимального розміру зірочка повинна з’являтися у іншій випадковій позиції.
+    </p>
+
+	 <div class="sky"></div>
+    <script>
+		class Sky {
+			constructor(numberStar) {
+				this.numberStar = numberStar
+			}
+			getRandomNumber(minV, maxV) {
+				return minV + Math.floor(Math.random() * (maxV - minV + 1))
+			}
+			runLifeStar(star) {
+				const step = this.getRandomNumber(3, 7)
+				const interval = this.getRandomNumber(1, 5)
+
+				let timerID = setInterval(() => {
+					star.style.fontSize = parseInt(star.style.fontSize) + step + 'px'
+
+					if (parseInt(star.style.fontSize) > 50) {
+						star.remove()
+						this.skyContainer.append(this.createStar())
+						clearInterval(timerID)						
+					} 
+					
+				}, interval * 1000)
+			}
+			createStar() {
+				const star = document.createElement('div')
+				star.className = 'star'
+				star.innerHTML = '*'
+				star.style.cssText = `
+					left: ${this.getRandomNumber(0, 96)}%;
+					top: ${this.getRandomNumber(0, 94)}%;
+					font-size: ${this.getRandomNumber(10, 40)}px;
+				`
+				this.runLifeStar(star)
+				return star
+			}
+			render(container) {
+				this.skyContainer = document.querySelector('.sky')
+				
+				for (let i = 0; i < this.numberStar; i++) {
+					this.skyContainer.append(this.createStar())
+				}
+			}
+		}
+
+		const sky = new Sky(10)
+		sky.render('.sky')
+
+    </script>
+  </body>
+</html>

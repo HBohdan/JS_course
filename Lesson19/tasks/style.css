@@ -1,0 +1,10 @@
+.task1,
+.task5,
+.task6 {
+	padding: 10px;
+	width: max-content;
+}
+
+.task1 input {
+	margin: 5px;
+}
