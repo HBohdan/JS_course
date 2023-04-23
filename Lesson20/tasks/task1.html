@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+	 <style>
+		input {
+			margin-left: 5px;
+		}
+		li {
+			list-style-type: none;
+		}
+	 </style>
+	 
+  	</head>
+
+	<body>
+		<h3>Завдання 1</h3>
+		<p>
+			Динамічний пошук. Є список працівників і поле пошуку. При введенні відображаються усі, які містять вказаний фрагмент.
+		</p>
+		<div class="cnt"></div>
+
+		<script>	
+			class DynamicSearch {
+				constructor(list) {
+					this.list = list
+				}
+				search(input) {
+					let currentList = this.list.filter(name => name.toLowerCase().includes(input.value))
+					this.cntList.innerHTML = ''
+					this.cntEmployeesList.append(this.createListEmployees(currentList))					
+				}
+				createListEmployees(list) {
+					this.cntList = document.createElement('ul')					
+
+					for (const name of list) {
+						const cntListItem = document.createElement('li')
+						cntListItem.innerText = name
+						this.cntList.append(cntListItem)
+					}
+
+					return this.cntList
+				}
+				render(targetSelector) {
+					const container = document.createElement('div')
+
+					const inputContainer = document.createElement('div')
+					const label = document.createElement('label')
+					label.innerText = 'Ім\'я'
+
+					const input = document.createElement('input')
+					input.placeholder = 'Я шукаю...'
+					input.oninput = this.search.bind(this, input)
+					label.append(input)
+					inputContainer.append(label)
+					container.append(inputContainer)
+
+					this.cntEmployeesList = document.createElement('div')
+					const title = document.createElement('h3')
+					title.innerText = 'Працівники:'
+					this.cntEmployeesList.append(title)
+
+					this.cntEmployeesList.append(this.createListEmployees(this.list))
+
+					container.append(this.cntEmployeesList)
+					document.querySelector(targetSelector).append(container)
+				}
+			}
+			
+			const listEmployees = [
+				'Іванов І.І.',
+				'Петров П.П.',
+				'Скрипка С.П.',
+				'Гончаренко Г.О.',
+				'Івась І.І.'
+			]
+
+			const search = new DynamicSearch(listEmployees)
+			search.render('.cnt')
+		</script>    
+	</body>
+</html>

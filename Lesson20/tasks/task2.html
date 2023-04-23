@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+	 <style>
+		/* * {
+			padding: 0;
+			margin: 0;
+		} */
+		.filters div {
+			display: inline-block;
+			margin-left: 10px;
+		}
+		select {
+			margin-left: 5px;
+			width: 110px;
+		}
+		.list div {
+			height: 20px;
+		}
+	 </style>
+	 
+  </head>
+
+  <body>
+    <h3>Завдання 2</h3>
+    <p>
+      Дано список автомобілів (марка, рік випуску, ціна). Сформувати елементи для фільтрування з використанням випадаючого списку (контент цих випадаючих списків сформувати у залежності від переданого списку).
+    </p>
+
+    <div class="container"></div> 
+	 <script>
+		class DynamicSearchCar {
+			constructor(initData) {
+				this.data = initData
+			}
+			renderListCar(data) {
+				this.searchList.innerHTML = ''
+				for (const car of data) {
+					const elemList = document.createElement('div')
+					elemList.innerText = `${car.brand} - ${car.year} р. - ${car.price}$`
+					this.searchList.append(elemList)
+				}
+			}
+			updateOptions(selectObj, keyObj) {
+				let updateData = this.data.filter(car => car[keyObj] == selectObj.value)
+				let targetSelect
+				if (keyObj === 'brand') {
+					keyObj = 'year'
+					targetSelect = this.selectYearCar.firstChild.firstElementChild
+					if (selectObj.value) this.createOptionsForSelect(updateData, keyObj, targetSelect)
+					else this.createOptionsForSelect(this.data, keyObj, targetSelect)
+				} else {
+					keyObj = 'brand'
+					targetSelect = this.selectBrandCar.firstChild.firstElementChild
+					if (selectObj.value) this.createOptionsForSelect(updateData, keyObj, targetSelect)
+					else this.createOptionsForSelect(this.data, keyObj, targetSelect)
+				}
+			}
+			createOptionsForSelect(data, key, select) {
+				select.innerHTML = ''
+				const firstOpt = document.createElement('option')
+				firstOpt.innerText = '- не вибрано -'
+				firstOpt.value = ''
+				select.append(firstOpt)
+
+				let listKeyValues = []
+				for (const car of data) {
+					if (!listKeyValues.includes(car[key])) listKeyValues.push(car[key])
+				}
+				listKeyValues.sort()
+				for (const elem of listKeyValues) {
+					const option = document.createElement('option')
+					option.innerText = elem
+					select.append(option)
+				}
+				this.renderListCar(data)
+			}
+			createSelectItem(labelText, key) {
+				const div = document.createElement('div')
+				const label = document.createElement('label')
+				label.innerText = labelText
+
+				const select = document.createElement('select')
+				select.onchange = this.updateOptions.bind(this, select, key)
+
+				this.createOptionsForSelect(this.data, key, select)
+				
+				label.append(select)
+				div.append(label)
+				return div
+			}
+			render(targetSelector) {
+				const searchContainer = document.createElement('div')
+
+				const searchListCnt = document.createElement('div')
+				searchListCnt.className = 'list'
+				const searchListCntTitle = document.createElement('h3')
+				searchListCntTitle.innerText = 'Список'
+				searchListCnt.append(searchListCntTitle)
+
+				this.searchList = document.createElement('div')
+				searchListCnt.append(this.searchList)
+				searchContainer.append(searchListCnt)
+
+				const searchFilters = document.createElement('div')
+				searchFilters.className = 'filters'
+
+				const filtersTitle = document.createElement('h3')
+				filtersTitle.innerText = 'Фільтри пошуку'
+				searchFilters.append(filtersTitle)
+
+				this.selectBrandCar = this.createSelectItem('Марка', 'brand')
+				searchFilters.append(this.selectBrandCar)
+				this.selectYearCar = this.createSelectItem('Рік випуску', 'year')
+				searchFilters.append(this.selectYearCar)
+				searchContainer.prepend(searchFilters)
+
+				document.querySelector(targetSelector).append(searchContainer)
+			}
+		}
+
+		const dataCars = [
+			{
+				brand: 'Mercedes',
+				year: 2018,
+				price: 25000
+			},
+			{
+				brand: 'Opel',
+				year: 2004,
+				price: 15000
+			},
+			{
+				brand: 'Opel',
+				year: 2000,
+				price: 9000
+			},
+			{
+				brand: 'Opel',
+				year: 2000,
+				price: 5000
+			},
+			{
+				brand: 'Audi',
+				year: 2000,
+				price: 7000
+			},
+		]
+    
+		const resultCar = new DynamicSearchCar(dataCars)
+		resultCar.render('.container')
+	 </script>
+  </body>
+</html>
