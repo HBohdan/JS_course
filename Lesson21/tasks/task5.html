@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+	 <style>
+		form {
+			display: flex;
+			flex-direction: column;
+			border: 1px solid green;
+			width: max-content;
+			padding: 10px;
+		}
+		label {
+			display: flex;
+    		justify-content: space-between;
+			align-items: center;
+		}
+		input {
+			margin: 5px;
+		}
+	 </style>
+	 
+  </head>
+
+  <body>
+    <h3>Завдання 5</h3>
+    <p>
+      На формі вводять 7 числових значень (вік, зріст, вага, заробітна плата, стаж, номер відділу, порядковий номер). Додати подію обробки події click на форму і якщо клік на input, то автоматично замінювати значення його на 0.
+    </p>
+
+    <div class="form">
+		
+	 </div> 
+	 <script>
+		class ElementsCreator {
+			static createHTMLElement({tag, attrs, props, events}) {
+				const el = document.createElement(tag)
+				if (attrs) {
+					for (const attrKey in attrs) {
+						el.setAttribute(attrKey, attrs[attrKey])
+					}
+				}
+				if (props) {
+					for (const propKey in props) {
+						el[propKey] = props[propKey]
+					}
+				}
+				if (events) {
+					for (const eventType in events) {
+						el.addEventListener(eventType, events[eventType])
+					}
+				}
+				return el
+			}
+			static createInputWithLabel({labelOptions, inputOptions}) {
+				const inp = ElementsCreator.createHTMLElement({
+					tag: 'input',
+					...(inputOptions??{})
+				})
+				const label = ElementsCreator.createHTMLElement({
+					tag: 'label',
+					...(labelOptions??{})
+				})
+				label.append(inp)
+				return {label, inp}
+			}
+		}
+
+		class Form {
+			constructor(dataTitleLabel) {
+				this.listTitleLabel = dataTitleLabel
+				this.el = this.createElement()
+			}
+			clickForm(event) {
+				if (event.target.tagName === 'INPUT') event.target.value = 0
+			}
+			createElement() {
+				const form = ElementsCreator.createHTMLElement({
+					tag: 'form',
+					events: {
+						click: this.clickForm
+					}
+				})
+
+				for (const title of this.listTitleLabel) {
+					let obj = ElementsCreator.createInputWithLabel({
+						labelOptions: {
+							props: {
+								innerText: title
+							}
+						}
+					})
+
+					form.append(obj.label)
+				}
+
+				return form
+			}
+			render(targetSelector) {
+				document.querySelector(targetSelector).append(this.el)
+			}			
+		}
+
+		const listTitleLabel = [
+			'Вік',
+			'Зріст',
+			'Вага',
+			'Заробітна плата',
+			'Стаж',
+			'Номер відділу',
+			'Порядковий номер',
+		]
+
+		const f = new Form(listTitleLabel)
+		f.render('.form')
+	 </script>
+  </body>
+</html>

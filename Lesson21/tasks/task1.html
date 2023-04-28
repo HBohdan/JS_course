@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>	 
+  	</head>
+	<style>
+		.cnt div {
+			width: max-content;
+		}
+	</style>
+
+	<body>
+		<h3>Завдання 1</h3>
+		<p>
+			Дано 10 рядків тексту «Hello!» у окремих div. При кліку на якийсь із них усі наступні повинні бути зафарбовані у червоний колір.
+		</p>
+
+		<div class="cnt">
+			<div>Hello!</div>
+			<div>Hello!</div>
+			<div>Hello!</div>
+			<div>Hello!</div>
+			<div>Hello!</div>
+			<div>Hello!</div>
+			<div>Hello!</div>
+			<div>Hello!</div>
+			<div>Hello!</div>
+			<div>Hello!</div>
+		</div>
+		
+
+		<script>	
+			const cnt = document.querySelector('.cnt')
+			console.log(cnt.children)
+
+			for (const elem of cnt.children) {
+				elem.onclick = clickElem
+			}
+
+			function clickElem() {
+				let div = this
+				// div.style.background = 'red'
+				while(div.nextElementSibling) {
+					div = div.nextElementSibling
+					div.style.background = 'red'
+				}
+			}
+		</script>    
+	</body>
+</html>

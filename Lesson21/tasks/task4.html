@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+	 <style>
+		.container {
+			display: flex;
+		}
+		.cntTable {
+			width: 150px;
+			margin: 20px;
+		}
+		table {
+			border: 3px solid black;
+			margin: 10px auto;
+		}
+		td {
+			border: 1px solid black;
+			width: 20px;
+			height: 20px;
+			text-align: center;
+		}
+	 </style>
+	 
+  </head>
+
+  <body>
+    <h3>Завдання 4</h3>
+    <p>
+      Дано 3 таблиці розмірності 3*3 з випадковими числами. Якщо відбувається клік на якійсь із клітинок, то до відповідної таблиці додається червона рамка (спробуйте додати можливість відображення кількості кліків біля назви таблиці з використанням відповідно доданого для цього атрибута).
+    </p>
+
+    <div class="container">
+		
+	 </div> 
+	 <script>
+		class Table {
+			constructor(numRow, numCol) {
+				this.numRow = numRow
+				this.numCol = numCol
+			}
+			getRandomNumber(minV, maxV) {
+				return minV + Math.floor(Math.random() * (maxV - minV + 1))
+			}
+			createTable() {
+				const table = document.createElement('table')
+				for (let row = 0; row < this.numRow; row++) {
+					const tr = document.createElement('tr')
+					for (let col = 0; col < this.numCol; col++) {
+						const td = document.createElement('td')
+						td.innerText = this.getRandomNumber(1, 99)
+						tr.append(td)
+					}
+					table.append(tr)					
+				}
+				return table
+			}
+		}
+
+		class CountClick {
+			constructor(numTable) {
+				this.numTable = numTable
+			}
+			
+			countClick() {
+				let countAttr = this.getAttribute('count')
+				if (event.target.tagName === 'TD') {
+					countAttr++
+					this.setAttribute('count', countAttr)
+					this.closest('div').firstElementChild.firstElementChild.innerText = countAttr
+					this.style.borderColor = 'red'
+				}
+			}
+			render(targetSelector) {
+				const cnt = document.querySelector(targetSelector)
+				
+				for (let i = 0; i < this.numTable; i++) {
+					const cntTable = document.createElement('div')
+					cntTable.className = 'cntTable'
+
+					const cntCountClick = document.createElement('div')
+					cntCountClick.innerText = 'Кількість кліків = '
+
+					const span = document.createElement('span')
+					span.innerText = 0
+					cntCountClick.append(span)
+					cntTable.append(cntCountClick)
+
+					const table = new Table(3, 3).createTable()
+					table.setAttribute('count', 0)
+					table.onclick = this.countClick
+					cntTable.append(table)
+					cnt.append(cntTable)
+				}				
+			}
+		}
+
+		const cntTable = new CountClick(3)
+		cntTable.render('.container')
+	 </script>
+  </body>
+</html>

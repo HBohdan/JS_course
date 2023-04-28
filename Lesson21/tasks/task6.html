@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+	 <style>
+		* {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+		}
+		.basket {
+			padding-top: 30px;
+		}
+		.cntManager {
+			width: max-content;
+			margin: 0 auto;
+		}
+		.product {
+			width: 600px;
+			height: 50px;
+			border: 1px solid blue;
+			padding: 5px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+		.product img {
+			height: 40px;
+			width: 60px;
+		}
+		.cntTitle {
+			width: 130px;
+		}
+		.product button {
+			border: 2px solid black;
+			font-size: 20px;
+			width: 25px;
+			height: 25px;
+			cursor: pointer;
+		}
+		.product button[disabled] {
+			border-color: gray;
+			cursor: auto;
+		}
+		.pay {
+			color: red;
+		}
+		.product .del {
+			color: red;
+			border-color: red;
+		}
+		.totalPrice {
+			font-size: 20px;
+			font-weight: bold;
+			padding-top: 20px;
+		}
+		.totalPrice span {
+			color: red;
+		}
+	 </style>
+	 
+  </head>
+
+  <body>
+    <h3>Завдання 6</h3>
+    <p>
+      Дано перелік товарів у кошику. При зміні кількості одиниць товару збільшувати загальну вартість. Створити клас Product, що призначений для маніпуляцій товаром та клас ProductManager, що оперує з усіма товарами (через подію передвати ідентифікатор товару та операцію, що зроблена).
+    </p>
+
+    <div class="basket">
+		
+	 </div> 
+	 <img src="" alt="">
+	 <script>
+		class ElementsCreator {
+			static createHTMLElement({tag, attrs, props, events}) {
+				const el = document.createElement(tag)
+				if (attrs) {
+					for (const attrKey in attrs) {
+						el.setAttribute(attrKey, attrs[attrKey])
+					}
+				}
+				if (props) {
+					for (const propKey in props) {
+						el[propKey] = props[propKey]
+					}
+				}
+				if (events) {
+					for (const eventType in events) {
+						el.addEventListener(eventType, events[eventType])
+					}
+				}
+				return el
+			}
+			static createInputWithLabel({labelOptions, inputOptions}) {
+				const inp = ElementsCreator.createHTMLElement({
+					tag: 'input',
+					...(inputOptions??{})
+				})
+				const label = ElementsCreator.createHTMLElement({
+					tag: 'label',
+					...(labelOptions??{})
+				})
+				label.append(inp)
+				return {label, inp}
+			}
+		}
+
+		class Product {
+			constructor(initData) {
+				Object.assign(this, initData)
+				this.countProduct = 1
+				this.el = this.createElement()
+			}
+			createElement() {
+				const container = ElementsCreator.createHTMLElement({
+					tag: 'div',
+					attrs: {
+						class: 'product'
+					}
+				})
+
+				const img = ElementsCreator.createHTMLElement({
+					tag: 'img',
+					attrs: {
+						src: this.imgSrc
+					}
+				})
+				container.append(img)
+				const cntTitle = ElementsCreator.createHTMLElement({
+					tag: 'div',
+					attrs: {
+						class: 'cntTitle'
+					}
+				})
+				const h4 = ElementsCreator.createHTMLElement({
+					tag: 'h4',
+					props: {
+						innerText: this.title
+					}
+				})
+				cntTitle.append(h4)
+				container.append(cntTitle)
+
+				this.btnDecrease = ElementsCreator.createHTMLElement({
+					tag: 'button',
+					attrs: {
+						disabled: 'true'
+					},
+					props: {
+						innerText: '-'
+					},
+					events: {
+						click: this.decreaseProduct.bind(this)
+					}
+				})
+				container.append(this.btnDecrease)
+
+				this.numProduct = ElementsCreator.createHTMLElement({
+					tag: 'span',
+					attrs: {
+						class: 'numProduct'
+					},
+					props: {
+						innerText: `${this.countProduct}`
+					}
+				})
+				container.append(this.numProduct)
+
+				const btnIncrease = ElementsCreator.createHTMLElement({
+					tag: 'button',
+					props: {
+						innerText: '+'
+					},
+					events: {
+						click: this.increaseProduct.bind(this)
+					}
+				})
+				container.append(btnIncrease)
+
+				const toPay = ElementsCreator.createHTMLElement({
+					tag: 'div',
+					props: {
+						innerText: 'До оплати: '
+					}
+				})
+
+				this.paymentAmount = ElementsCreator.createHTMLElement({
+					tag: 'span',
+					attrs: {
+						class: 'pay'
+					},
+					props: {
+						innerText: this.price + ' грн.'
+					}
+				})
+				toPay.append(this.paymentAmount)
+				container.append(toPay)
+
+				const btnDelete = ElementsCreator.createHTMLElement({
+					tag: 'button',
+					attrs: {
+						class: 'del'
+					},
+					props: {
+						innerText: 'X'
+					},
+					events: {
+						click: this.onDelete.bind(this)
+					}
+				})
+				container.append(btnDelete)
+
+				return container
+			}
+			getSum() {
+				const sum = this.price * this.countProduct
+				return sum
+			}
+			increaseProduct() {
+				this.countProduct++
+				const sum = this.getSum()
+				this.numProduct.innerText = this.countProduct
+				this.paymentAmount.innerText = sum + ' грн.'
+
+				if (this.btnDecrease.hasAttribute('disabled'))
+					this.btnDecrease.removeAttribute('disabled')
+				
+				const increase = new CustomEvent('incProd')
+				this.el.dispatchEvent(increase)
+			}
+			decreaseProduct() {
+				this.countProduct--
+				const sum = this.getSum()
+				this.numProduct.innerText = this.countProduct
+				this.paymentAmount.innerText = sum + ' грн.'
+				if (this.countProduct === 1) this.btnDecrease.setAttribute('disabled', 'true')
+
+				const decrease = new CustomEvent('decProd')
+				this.el.dispatchEvent(decrease)
+			}
+			onDelete() {
+				const deleteEvent = new CustomEvent('delete', {
+					detail: {
+						productId: this.id
+					}
+				})
+				this.el.dispatchEvent(deleteEvent)
+			}
+			render(targetSelector) {
+				document.querySelector(targetSelector).append(this.el)
+			}
+		}
+
+		class ProductManager {
+			constructor() {
+				this.productList = []
+				this.el = this.createElement()
+			}
+			deleteProduct(event) {
+				const productId = event.detail.productId
+				this.productList = this.productList.filter(product => product.id !== productId)
+				this.displayList()
+			}
+			addProduct(event) {
+				const product = {...event}
+
+				const productObj = new Product(product)
+				productObj.el.addEventListener('delete', this.deleteProduct.bind(this))
+				productObj.el.addEventListener('incProd', this.displayList.bind(this))
+				productObj.el.addEventListener('decProd', this.displayList.bind(this))
+				this.productList.push(productObj)
+				this.displayList()
+			}
+			displayList() {
+				this.productsContainer.innerHTML = ''
+				this.productList.forEach((product) => {
+					this.productsContainer.append(product.el)
+				})
+				this.spanTotalPrice.innerText = this.getValueTotalPrice() + ' грн.'
+			}
+			getValueTotalPrice() {
+				this.valueTotalPrice = 0
+				for (const prod of this.productList) {
+					this.valueTotalPrice += prod.price * prod.countProduct
+				}
+				
+				return this.valueTotalPrice
+			}
+
+			createElement() {
+				const cntManager = ElementsCreator.createHTMLElement({
+					tag: 'div',
+					attrs: {
+						class: 'cntManager'
+					}					
+				})
+
+				this.productsContainer = document.createElement('div')
+				cntManager.append(this.productsContainer)
+
+				const totalPrice = ElementsCreator.createHTMLElement({
+					tag: 'div',
+					attrs: {
+						class: 'totalPrice'
+					},
+					props: {
+						innerText: 'Загалом до оплати: '
+					}
+				})
+				this.spanTotalPrice = ElementsCreator.createHTMLElement({
+					tag: 'span',
+				})
+				totalPrice.append(this.spanTotalPrice)
+
+				cntManager.append(totalPrice)
+
+				return cntManager
+			}
+			render(targetSelector) {
+				document.querySelector(targetSelector).append(this.el)
+			}
+		}
+
+		const manager = new ProductManager()
+		manager.addProduct({
+				id: 903,
+				imgSrc: 'img/nout1.webp',
+				title: 'Ноутбук Acer',
+				price: 30000
+			})
+		manager.addProduct({
+				id: 904,
+				imgSrc: 'img/nout2.webp',
+				title: 'Ноутбук Lenovo',
+				price: 16000
+			})
+		manager.addProduct({
+				id: 905,
+				imgSrc: 'img/nout3.webp',
+				title: 'Ноутбук Asus',
+				price: 28000
+			})
+		manager.render('.basket')
+
+	 </script>
+  </body>
+</html>
